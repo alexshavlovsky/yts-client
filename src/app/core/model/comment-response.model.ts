@@ -1,13 +1,13 @@
 export interface CommentResponse {
   commentId: string;
   videoId: string;
-  chanelId: string;
   authorText: string;
+  channelId: string;
   publishedTimeText: string;
   text: string;
   likeCount: number;
   replyCount: number;
-  parentId: string;
+  parentId: string | null;
   createdDate: Date;
-  lastUpdatedDate: Date;
+  lastUpdatedDate: Date | null;
 }
