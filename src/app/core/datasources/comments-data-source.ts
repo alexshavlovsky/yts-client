@@ -14,7 +14,7 @@ export class CommentsDataSource extends AbstractDataSource<CommentResponse> {
   load(pageableRequest: PageableRequest, filter?: { [p: string]: string }): void {
     this.loadingSubject.next(true);
     this.commentsService.find(pageableRequest, filter).pipe(
-      catchError(() => of(AbstractDataSource.empty)),
+      catchError(() => of(AbstractDataSource.EMPTY_PAGE)),
       finalize(() => this.loadingSubject.next(false))
     ).subscribe(response => {
       this.contextSubject.next(response);

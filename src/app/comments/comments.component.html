@@ -1,61 +1,31 @@
-<div class="course">
-
-<!--  <h2>{{course?.description}}</h2>-->
-
-<!--  <img class="course-thumbnail" [src]="course?.iconUrl">-->
-
-  <mat-form-field>
-
-    <input matInput placeholder="Search lessons" #input>
-
-  </mat-form-field>
-
-  <div class="spinner-container" *ngIf="dataSource.loading$ | async">
-
-    <mat-spinner></mat-spinner>
-
-  </div>
-
-  <mat-table class="lessons-table mat-elevation-z8" [dataSource]="dataSource"
-             matSort >
-
-    <ng-container matColumnDef="seqNo">
-
-      <mat-header-cell *matHeaderCellDef mat-sort-header>#</mat-header-cell>
-
-      <mat-cell *matCellDef="let lesson">{{lesson.seqNo}}</mat-cell>
-
-    </ng-container>
-
-    <ng-container matColumnDef="description">
-
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
-
-      <mat-cell class="description-cell"
-                *matCellDef="let lesson">{{lesson.description}}</mat-cell>
-
-    </ng-container>
-
-    <ng-container matColumnDef="duration">
-
-      <mat-header-cell *matHeaderCellDef>Duration</mat-header-cell>
-
-      <mat-cell class="duration-cell"
-                *matCellDef="let lesson">{{lesson.duration}}</mat-cell>
-
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-
-    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-
-  </mat-table>
-
-
-  <mat-paginator  [length]="50" [pageSize]="3"
-                 [pageSizeOptions]="[3, 5, 10]"></mat-paginator>
-
-
+<div class="spinner-container" *ngIf="dataSource.loading$ | async">
+  <mat-spinner></mat-spinner>
 </div>
 
+<div class="parent">
 
+  <div class="header-input">
+    <mat-form-field class="input-container">
+      <input matInput placeholder="Search comments" #input>
+    </mat-form-field>
+  </div>
+
+  <div class="content-table">
+    <mat-table [dataSource]="dataSource" matSort>
+      <ng-container *ngFor="let column of columnsSpec" [matColumnDef]="column.property">
+        <mat-header-cell [ngClass]="column.class" *matHeaderCellDef mat-sort-header>{{column.title}}</mat-header-cell>
+        <mat-cell [ngClass]="column.class" *matCellDef="let element">{{element[column.property]}}</mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+
+  <div class="footer-paginator">
+    <mat-paginator [length]="(dataSource.context$|async)?.totalElements"
+                   [pageSize]="(dataSource.context$|async)?.size"
+                   [pageIndex]="(dataSource.context$|async)?.number"
+                   [pageSizeOptions]="[5, 10, 100, 1000]" showFirstLastButtons></mat-paginator>
+  </div>
+
+</div>

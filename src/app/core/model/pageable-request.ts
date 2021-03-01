@@ -1,7 +1,6 @@
 import {HttpParams} from '@angular/common/http';
 
 export class PageableRequest {
-  static DEFAULT_SORT_DIRECTION = 'asc';
   private readonly page: number;
   private readonly size: number;
   private readonly sortProperty: string | undefined;
@@ -18,10 +17,8 @@ export class PageableRequest {
     let httpParams = new HttpParams()
       .set('page', this.page.toString())
       .set('size', this.size.toString());
-    if (this.sortProperty) {
-      httpParams = httpParams
-        .set('sort', this.sortProperty)
-        .append('sort', this.sortDirection ? this.sortDirection : PageableRequest.DEFAULT_SORT_DIRECTION);
+    if (this.sortProperty && this.sortDirection && (this.sortDirection === 'asc' || this.sortDirection === 'desc')) {
+      httpParams = httpParams.set('sort', this.sortProperty + ',' + this.sortDirection);
     }
     if (params) {
       for (const [param, value] of Object.entries(params)) {

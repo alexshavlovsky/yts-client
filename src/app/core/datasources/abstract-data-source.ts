@@ -5,7 +5,7 @@ import {PageableRequest} from '../model/pageable-request';
 
 export abstract class AbstractDataSource<T> implements DataSource<T> {
 
-  protected static empty: PagedResponse<any> = {
+  protected static EMPTY_PAGE: PagedResponse<any> = {
     content: [],
     number: 0,
     numberOfElements: 0,
@@ -15,9 +15,10 @@ export abstract class AbstractDataSource<T> implements DataSource<T> {
   };
 
   protected dataSubject = new BehaviorSubject<T[]>([]);
-  protected contextSubject = new BehaviorSubject<PagedResponse<T>>(AbstractDataSource.empty);
+  protected contextSubject = new BehaviorSubject<PagedResponse<T>>(AbstractDataSource.EMPTY_PAGE);
   protected loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
+  public context$ = this.contextSubject.asObservable();
 
   connect(collectionViewer: CollectionViewer): Observable<T[]> {
     return this.dataSubject.asObservable();
