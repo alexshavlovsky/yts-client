@@ -6,6 +6,7 @@ import {debounceTime, distinctUntilChanged, map, tap} from 'rxjs/operators';
 import {CommentsDataSource} from '../core/datasources/comments-data-source';
 import {CommentsService} from '../core/rest/comments.service';
 import {PageableRequest} from '../core/model/pageable-request';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-comments',
@@ -29,7 +30,8 @@ export class CommentsComponent implements AfterViewInit {
   @ViewChild(MatSort, {static: true}) sort!: MatSort;
   @ViewChild('input', {static: true}) input!: ElementRef;
 
-  constructor(private commentService: CommentsService) {
+  constructor(private commentService: CommentsService,
+              private snackBar: MatSnackBar) {
     this.dataSource = new CommentsDataSource(this.commentService);
   }
 
@@ -51,6 +53,7 @@ export class CommentsComponent implements AfterViewInit {
       ),
       tap(query => this.loadData(query))
     ).subscribe();
+    this.dataSource.error$.subscribe(message => this.snackBar.open(message, 'close'));
   }
 
   buildQuery(resetPaginator: boolean): PagedSortedFilteredQuery {
