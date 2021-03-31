@@ -6,7 +6,11 @@
 
   <div class="header-input">
     <mat-form-field class="input-container">
-      <input matInput placeholder="Search comments" #input>
+      <mat-label>Search comments</mat-label>
+      <input matInput type="text" #input>
+      <button mat-button *ngIf="input.value" matSuffix mat-icon-button aria-label="Clear" (click)="input.value=''">
+        <mat-icon>close</mat-icon>
+      </button>
     </mat-form-field>
   </div>
 
@@ -16,7 +20,7 @@
         <mat-header-cell [ngClass]="column.class" *matHeaderCellDef mat-sort-header>{{column.title}}</mat-header-cell>
         <mat-cell [ngClass]="column.class" *matCellDef="let element">{{element[column.property]}}</mat-cell>
       </ng-container>
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
     </mat-table>
   </div>

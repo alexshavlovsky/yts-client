@@ -40,6 +40,7 @@ export class CommentsComponent implements AfterViewInit {
       of(true), // this value triggers initial data request
       this.paginator.page.pipe(map(_ => false)),
       this.sort.sortChange.pipe(map(_ => true)),
+      fromEvent(this.input.nativeElement, 'change').pipe(map(_ => true)),
       fromEvent(this.input.nativeElement, 'keyup').pipe(map(_ => true)),
     ).pipe(
       debounceTime(500),
