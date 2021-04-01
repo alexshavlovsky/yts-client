@@ -4,7 +4,7 @@
 
 <div class="parent">
 
-  <div class="shadow-container mat-elevation-z5">
+  <div class="shadow-container">
   </div>
 
   <div class="corner-menu">
@@ -22,7 +22,7 @@
     <mat-form-field>
       <mat-label>Search comments</mat-label>
       <input matInput type="text" #input>
-      <button mat-icon-button matSuffix (click)="isSearchOn=false">
+      <button mat-icon-button matSuffix (click)="isSearchOn=false; input.value='';">
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>

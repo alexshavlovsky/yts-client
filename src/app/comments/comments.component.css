@@ -1,7 +1,7 @@
 .parent {
   display: grid;
-  grid-template-columns: 60px 1fr;
-  grid-template-rows: 60px 1fr auto;
+  grid-template-columns: 56px 1fr;
+  grid-template-rows: 56px 1fr auto;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   max-height: 100%;
@@ -10,7 +10,7 @@
 
 .shadow-container {
   grid-area: 1 / 1 / 2 / 3;
-  border-bottom: 1px solid gray;
+  border-bottom: 2px solid #3f51b5;
 }
 
 .corner-menu {
@@ -95,4 +95,9 @@ mat-form-field {
 .mat-row,
 .mat-header-row {
   min-width: 600px;
+}
+
+.mat-paginator-container,
+.mat-header-row {
+  min-height: 40px;
 }

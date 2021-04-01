@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ColumnSpec} from '../column-spec';
+import {ColumnSpec} from '../table-connector/column-spec';
 
 @Component({
   selector: 'app-basic-cell',

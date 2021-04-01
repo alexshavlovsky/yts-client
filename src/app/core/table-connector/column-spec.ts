@@ -20,3 +20,6 @@ export interface ColumnSpec {
   linkBuilder?: LinkBuilder;
   biLinkBuilder?: BiLinkBuilder;
 }
+
+export const YT_CHANNEL_LINK_BUILDER: LinkBuilderStrategy = (id => 'https://www.youtube.com/channel/' + id);
+export const YT_COMMENT_LINK_BUILDER: BiLinkBuilderStrategy = ((id1, id2) => 'https://www.youtube.com/watch?v=' + id1 + '&lc=' + id2);
