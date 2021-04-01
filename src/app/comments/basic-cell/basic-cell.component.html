@@ -1,0 +1,7 @@
+<ng-container *ngIf="link; then linkContent else basicContent"></ng-container>
+<ng-template #linkContent>
+  <a target="_blank" href="{{link}}">{{text}}</a>
+</ng-template>
+<ng-template #basicContent>
+  {{text}}
+</ng-template>

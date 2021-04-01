@@ -7,6 +7,7 @@ import {CommentsDataSource} from '../core/datasources/comments-data-source';
 import {CommentsService} from '../core/rest/comments.service';
 import {PageableRequest} from '../core/model/pageable-request';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {BiLinkBuilderStrategy, ColumnSpec, LinkBuilderStrategy} from './column-spec';
 
 @Component({
   selector: 'app-comments',
@@ -15,11 +16,26 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class CommentsComponent implements AfterViewInit {
 
-  dataSource: CommentsDataSource;
+  constructor(private commentService: CommentsService,
+              private snackBar: MatSnackBar) {
+    this.dataSource = new CommentsDataSource(this.commentService);
+  }
 
-  columnsSpec = [
-    {title: 'Author', property: 'authorText', class: 'a-left flex2'},
-    {title: 'Comment', property: 'text', class: 'a-left flex8'},
+  dataSource: CommentsDataSource;
+  isSearchOn = false;
+
+  channelLinkBuilder: LinkBuilderStrategy = (id => 'https://www.youtube.com/channel/' + id);
+
+  commentLinkBuilder: BiLinkBuilderStrategy = ((id1, id2) => 'https://www.youtube.com/watch?v=' + id1 + '&lc=' + id2);
+
+  columnsSpec: ColumnSpec[] = [
+    {
+      title: 'Author', property: 'authorText', class: 'a-left flex2',
+      linkBuilder: {idKey: 'channelId', builder: this.channelLinkBuilder}
+    },
+    {title: 'Comment', property: 'text', class: 'a-left flex8',
+      biLinkBuilder: {idKey1: 'videoId', idKey2: 'commentId', builder: this.commentLinkBuilder}
+    },
     {title: 'Likes', property: 'likeCount', class: 'a-left flex1'},
     {title: 'Published', property: 'publishedTimeText', class: 'a-left flex1'},
   ];
@@ -29,11 +45,6 @@ export class CommentsComponent implements AfterViewInit {
   @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort!: MatSort;
   @ViewChild('input', {static: true}) input!: ElementRef;
-
-  constructor(private commentService: CommentsService,
-              private snackBar: MatSnackBar) {
-    this.dataSource = new CommentsDataSource(this.commentService);
-  }
 
   ngAfterViewInit(): void {
     merge(
@@ -62,6 +73,9 @@ export class CommentsComponent implements AfterViewInit {
     const doFilter: boolean = filter.length > 0;
     const sortDirection: string = this.sort.direction;
     const doSort: boolean = (sortDirection !== '') && doFilter;
+    // if (sortDirection !== '' && !doFilter) {
+    //   this.snackBar.open('Please enter a search query to enable sorting', 'close');
+    // }
     return {
       pageIndex: resetPaginator ? 0 : this.paginator.pageIndex,
       pageSize: this.paginator.pageSize,
