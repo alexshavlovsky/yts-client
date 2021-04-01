@@ -1,10 +1,12 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {CommentsComponent} from './comments/comments.component';
+import {ChannelsComponent} from './channels/channels.component';
 
 const routes: Routes = [
   {path: 'comments', component: CommentsComponent},
-  {path: '', pathMatch: 'full', redirectTo: 'comments'},
+  {path: 'channels', component: ChannelsComponent},
+  {path: '', pathMatch: 'full', redirectTo: 'channels'},
 ];
 
 @NgModule({

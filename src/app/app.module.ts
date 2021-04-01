@@ -10,13 +10,15 @@ import {HttpClientModule} from '@angular/common/http';
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material/snack-bar';
 import {BasicCellComponent} from './core/basic-cell/basic-cell.component';
 import { CornerMenuComponent } from './core/corner-menu/corner-menu.component';
+import { ChannelsComponent } from './channels/channels.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CommentsComponent,
     BasicCellComponent,
-    CornerMenuComponent
+    CornerMenuComponent,
+    ChannelsComponent
   ],
   imports: [
     BrowserModule,
