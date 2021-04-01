@@ -8,15 +8,14 @@
   </div>
 
   <div class="corner-menu">
-    <button mat-icon-button color="primary">
-      <mat-icon>menu</mat-icon>
-    </button>
+    <app-corner-menu></app-corner-menu>
   </div>
 
-  <div class="header">
-    <button mat-icon-button style="float: right" color="primary" *ngIf="!isSearchOn" (click)="isSearchOn=true">
+  <div class="header" *ngIf="!isSearchOn">
+    <button mat-icon-button style="float: right" color="primary" (click)="isSearchOn=true">
       <mat-icon>search</mat-icon>
     </button>
+    <div class="header-title">Comments</div>
   </div>
 
   <div class="search-container" [style.visibility]="isSearchOn ? 'visible' : 'hidden'">

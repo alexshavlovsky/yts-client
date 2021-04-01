@@ -7,7 +7,7 @@ import {CommentsDataSource} from '../core/datasources/comments-data-source';
 import {CommentsService} from '../core/rest/comments.service';
 import {PageableRequest} from '../core/model/pageable-request';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {BiLinkBuilderStrategy, ColumnSpec, LinkBuilderStrategy} from './column-spec';
+import {BiLinkBuilderStrategy, ColumnSpec, LinkBuilderStrategy} from '../core/column-spec';
 
 @Component({
   selector: 'app-comments',

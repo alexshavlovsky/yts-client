@@ -8,13 +8,15 @@ import {MaterialModule} from './material.module';
 import {CommentsComponent} from './comments/comments.component';
 import {HttpClientModule} from '@angular/common/http';
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material/snack-bar';
-import { BasicCellComponent } from './comments/basic-cell/basic-cell.component';
+import {BasicCellComponent} from './core/basic-cell/basic-cell.component';
+import { CornerMenuComponent } from './core/corner-menu/corner-menu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CommentsComponent,
-    BasicCellComponent
+    BasicCellComponent,
+    CornerMenuComponent
   ],
   imports: [
     BrowserModule,

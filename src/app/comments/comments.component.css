@@ -24,6 +24,14 @@
   margin: 10px;
 }
 
+.header-title {
+  display: flex;
+  height: 100%;
+  font-size: 20px;
+  font-weight: bold;
+  align-items: center;
+}
+
 .search-container {
   grid-area: 1 / 2 / 2 / 3;
   margin-right: 20px;
