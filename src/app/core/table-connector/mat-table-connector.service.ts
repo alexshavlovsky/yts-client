@@ -4,19 +4,19 @@ import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {PagedSortedFilteringQuery} from './paged-sorted-filtering-query';
-import {AbstractDataSource} from '../datasources/abstract-data-source';
+import {GenericPagedDataSource} from '../datasources/generic-paged-data-source';
 import {PageableRequest} from '../model/pageable-request';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MatTableConnectorService {
+export class MatTableConnectorService<T> {
 
   constructor() {
   }
 
   connect(paginator: MatPaginator, sort: MatSort, input: ElementRef,
-          dataSource: AbstractDataSource<any>): Observable<void> {
+          dataSource: GenericPagedDataSource<T>): Observable<void> {
     return merge(
       of(true), // this value triggers initial data request
       paginator.page.pipe(map(_ => false)),
@@ -39,7 +39,6 @@ export class MatTableConnectorService {
 
   buildQuery(resetPaginator: boolean, paginator: MatPaginator, sort: MatSort, input: ElementRef): PagedSortedFilteringQuery {
     const filter: string = input.nativeElement.value;
-    console.log(filter);
     const doFilter: boolean = filter.length > 0;
     const sortDirection: string = sort.direction;
     const doSort: boolean = (sortDirection !== '') && doFilter;
@@ -52,7 +51,7 @@ export class MatTableConnectorService {
     };
   }
 
-  loadData(query: PagedSortedFilteringQuery, dataSource: AbstractDataSource<any>): void {
+  loadData(query: PagedSortedFilteringQuery, dataSource: GenericPagedDataSource<T>): void {
     dataSource.load(
       new PageableRequest(query.pageIndex, query.pageSize, query.sortProperty, query.sortDirection), {text: query.filter}
     );

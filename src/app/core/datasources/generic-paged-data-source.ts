@@ -1,9 +1,14 @@
 import {CollectionViewer, DataSource} from '@angular/cdk/collections';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 import {PagedResponse} from '../model/paged-response.model';
 import {PageableRequest} from '../model/pageable-request';
+import {catchError, finalize} from 'rxjs/operators';
+import {AbstractPagedService} from '../rest/abstact-paged.service';
 
-export abstract class AbstractDataSource<T> implements DataSource<T> {
+export class GenericPagedDataSource<T> implements DataSource<T> {
+
+  constructor(private pagedService: AbstractPagedService<T>) {
+  }
 
   protected static EMPTY_PAGE: PagedResponse<any> = {
     content: [],
@@ -15,7 +20,7 @@ export abstract class AbstractDataSource<T> implements DataSource<T> {
   };
 
   protected dataSubject = new BehaviorSubject<T[]>([]);
-  protected contextSubject = new BehaviorSubject<PagedResponse<T>>(AbstractDataSource.EMPTY_PAGE);
+  protected contextSubject = new BehaviorSubject<PagedResponse<T>>(GenericPagedDataSource.EMPTY_PAGE);
   protected loadingSubject = new BehaviorSubject<boolean>(false);
   protected errorSubject = new Subject<string>();
   public loading$ = this.loadingSubject.asObservable();
@@ -32,5 +37,18 @@ export abstract class AbstractDataSource<T> implements DataSource<T> {
     this.loadingSubject.complete();
   }
 
-  abstract load(pageableRequest: PageableRequest, filter: { [property: string]: string } | undefined): void;
+  load(pageableRequest: PageableRequest, filter?: { [p: string]: string }): void {
+    this.loadingSubject.next(true);
+    this.pagedService.find(pageableRequest, filter).pipe(
+      catchError(error => {
+        this.errorSubject.next(error.message);
+        return of(GenericPagedDataSource.EMPTY_PAGE);
+      }),
+      finalize(() => this.loadingSubject.next(false))
+    ).subscribe(response => {
+      this.contextSubject.next(response);
+      this.dataSubject.next(response.content);
+    });
+  }
+
 }

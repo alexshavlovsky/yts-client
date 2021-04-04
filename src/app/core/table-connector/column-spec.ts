@@ -21,5 +21,15 @@ export interface ColumnSpec {
   biLinkBuilder?: BiLinkBuilder;
 }
 
-export const YT_CHANNEL_LINK_BUILDER: LinkBuilderStrategy = (id => 'https://www.youtube.com/channel/' + id);
-export const YT_COMMENT_LINK_BUILDER: BiLinkBuilderStrategy = ((id1, id2) => 'https://www.youtube.com/watch?v=' + id1 + '&lc=' + id2);
+export const YT_CHANNEL_LINK_BUILDER_STRATEGY: LinkBuilderStrategy = (id => 'https://www.youtube.com/channel/' + id);
+export const YT_VIDEO_LINK_BUILDER_STRATEGY: LinkBuilderStrategy = (id => 'https://www.youtube.com/watch?v=' + id);
+export const YT_COMMENT_LINK_BUILDER_STRATEGY: BiLinkBuilderStrategy = ((id1, id2) =>
+  'https://www.youtube.com/watch?v=' + id1 + '&lc=' + id2);
+
+export const DEF_CHANNEL_LINK_BUILDER: LinkBuilder = {idKey: 'channelId', builder: YT_CHANNEL_LINK_BUILDER_STRATEGY};
+export const DEF_VIDEO_LINK_BUILDER: LinkBuilder = {idKey: 'videoId', builder: YT_VIDEO_LINK_BUILDER_STRATEGY};
+export const DEF_COMMENT_BI_LINK_BUILDER: BiLinkBuilder = {
+  idKey1: 'videoId',
+  idKey2: 'commentId',
+  builder: YT_COMMENT_LINK_BUILDER_STRATEGY
+};

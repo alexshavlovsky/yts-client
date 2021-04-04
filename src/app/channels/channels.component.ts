@@ -1,13 +1,13 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, ViewChild} from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatTableConnectorService} from '../core/table-connector/mat-table-connector.service';
-import {AbstractDataSource} from '../core/datasources/abstract-data-source';
+import {GenericPagedDataSource} from '../core/datasources/generic-paged-data-source';
 import {Subscription} from 'rxjs';
-import {ColumnSpec, YT_CHANNEL_LINK_BUILDER} from '../core/table-connector/column-spec';
+import {ColumnSpec, DEF_CHANNEL_LINK_BUILDER} from '../core/table-connector/column-spec';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {ChannelsService} from '../core/rest/channels.service';
-import {ChannelsDataSource} from '../core/datasources/channels-data-source';
+import {ChannelResponse} from '../core/model/channel-response.model';
 
 @Component({
   selector: 'app-channels',
@@ -18,23 +18,16 @@ export class ChannelsComponent implements AfterViewInit, OnDestroy {
 
   constructor(private channelsService: ChannelsService,
               private snackBar: MatSnackBar,
-              private matTableAdapterService: MatTableConnectorService) {
-    this.dataSource = new ChannelsDataSource(this.channelsService);
+              private matTableAdapterService: MatTableConnectorService<ChannelResponse>) {
+    this.dataSource = new GenericPagedDataSource<ChannelResponse>(this.channelsService);
   }
 
-  dataSource: AbstractDataSource<any>;
+  dataSource: GenericPagedDataSource<ChannelResponse>;
   isSearchOn = false;
-  matConnectorSubscription!: Subscription;
 
   columnsSpec: ColumnSpec[] = [
-    {
-      title: 'Vanity name', property: 'channelVanityName', class: 'a-left flex4',
-      linkBuilder: {idKey: 'channelId', builder: YT_CHANNEL_LINK_BUILDER}
-    },
-    {
-      title: 'Title', property: 'title', class: 'a-left flex4',
-      linkBuilder: {idKey: 'channelId', builder: YT_CHANNEL_LINK_BUILDER}
-    },
+    {title: 'Vanity name', property: 'channelVanityName', class: 'a-left flex4', linkBuilder: DEF_CHANNEL_LINK_BUILDER},
+    {title: 'Title', property: 'title', class: 'a-left flex4', linkBuilder: DEF_CHANNEL_LINK_BUILDER},
     {title: 'Video count', property: 'videoCount', class: 'a-left flex1'},
     {title: 'Subscribers', property: 'subscriberCount', class: 'a-left flex1'},
   ];
@@ -45,14 +38,15 @@ export class ChannelsComponent implements AfterViewInit, OnDestroy {
   @ViewChild(MatSort, {static: true}) sort!: MatSort;
   @ViewChild('input', {static: true}) input!: ElementRef;
 
+  sub = new Subscription();
+
   ngAfterViewInit(): void {
-    this.matConnectorSubscription = this.matTableAdapterService
-      .connect(this.paginator, this.sort, this.input, this.dataSource).subscribe();
-    this.dataSource.error$.subscribe(message => this.snackBar.open(message, 'close'));
+    this.sub.add(this.matTableAdapterService.connect(this.paginator, this.sort, this.input, this.dataSource).subscribe());
+    this.sub.add(this.dataSource.error$.subscribe(message => this.snackBar.open(message, 'close')));
   }
 
   ngOnDestroy(): void {
-    this.matConnectorSubscription.unsubscribe();
+    this.sub.unsubscribe();
   }
 
 }
