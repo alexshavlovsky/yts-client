@@ -50,4 +50,10 @@ export class VideosComponent implements AfterViewInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
+  hideSearchBar(): void {
+    this.isSearchOn = false;
+    this.input.nativeElement.value = '';
+    this.input.nativeElement.dispatchEvent(new Event('input'));
+  }
+
 }

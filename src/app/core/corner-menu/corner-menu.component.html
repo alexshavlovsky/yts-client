@@ -1,8 +1,22 @@
 <mat-menu #menu="matMenu">
-  <button mat-menu-item><a routerLink="/channels">Channels</a></button>
-  <button mat-menu-item><a routerLink="/videos">Videos</a></button>
-  <button mat-menu-item><a routerLink="/comments">Comments</a></button>
+  <button mat-menu-item (click)="openDialog()">
+    <mat-icon>add_to_queue</mat-icon>
+    <span>Add a channel</span>
+  </button>
+  <mat-divider></mat-divider>
+  <button mat-menu-item>
+    <mat-icon>ondemand_video</mat-icon>
+    <a routerLink="/channels">Channels</a>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>smart_display</mat-icon>
+    <a routerLink="/videos">Videos</a>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>forum</mat-icon>
+    <a routerLink="/comments">Comments</a>
+  </button>
 </mat-menu>
-<button mat-icon-button color="primary" [matMenuTriggerFor]="menu">
+<button mat-icon-button color="primary" [matMenuTriggerFor]="menu" #menuTrigger>
   <mat-icon>menu</mat-icon>
 </button>

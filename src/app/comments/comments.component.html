@@ -22,7 +22,7 @@
     <mat-form-field>
       <mat-label>Search comments</mat-label>
       <input matInput type="text" #input>
-      <button mat-icon-button matSuffix (click)="isSearchOn=false; input.value='';">
+      <button mat-icon-button matSuffix (click)="hideSearchBar()">
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>

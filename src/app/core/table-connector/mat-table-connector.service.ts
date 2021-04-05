@@ -21,7 +21,7 @@ export class MatTableConnectorService<T> {
       of(true), // this value triggers initial data request
       paginator.page.pipe(map(_ => false)),
       sort.sortChange.pipe(map(_ => true)),
-      fromEvent(input.nativeElement, 'change').pipe(map(_ => true)),
+      fromEvent(input.nativeElement, 'input').pipe(map(_ => true)),
       fromEvent(input.nativeElement, 'keyup').pipe(map(_ => true)),
     ).pipe(
       debounceTime(500),

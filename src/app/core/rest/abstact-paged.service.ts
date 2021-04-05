@@ -7,6 +7,7 @@ import {HttpHeaders} from '@angular/common/http';
 export abstract class AbstractPagedService<T> {
 
   static ACCEPT_JSON = new HttpHeaders({Accept: 'application/json'});
+  static CONTENT_JSON_ACCEPT_JSON = new HttpHeaders({Accept: 'application/json', 'Content-Type': 'application/json'});
 
   abstract find(pageableRequest: PageableRequest, filter: { [property: string]: string } | undefined): Observable<PagedResponse<T>>;
 

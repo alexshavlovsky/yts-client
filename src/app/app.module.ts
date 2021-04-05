@@ -9,9 +9,10 @@ import {CommentsComponent} from './comments/comments.component';
 import {HttpClientModule} from '@angular/common/http';
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material/snack-bar';
 import {BasicCellComponent} from './core/basic-cell/basic-cell.component';
-import { CornerMenuComponent } from './core/corner-menu/corner-menu.component';
-import { ChannelsComponent } from './channels/channels.component';
-import { VideosComponent } from './videos/videos.component';
+import {CornerMenuComponent} from './core/corner-menu/corner-menu.component';
+import {ChannelsComponent} from './channels/channels.component';
+import {VideosComponent} from './videos/videos.component';
+import {AddChannelDialogComponent} from './core/corner-menu/add-channel-dialog/add-channel-dialog.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { VideosComponent } from './videos/videos.component';
     BasicCellComponent,
     CornerMenuComponent,
     ChannelsComponent,
-    VideosComponent
+    VideosComponent,
+    AddChannelDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +32,8 @@ import { VideosComponent } from './videos/videos.component';
     HttpClientModule,
   ],
   providers: [{provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000}}],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [AddChannelDialogComponent]
 })
 export class AppModule {
 }
