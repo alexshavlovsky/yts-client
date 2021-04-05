@@ -39,9 +39,8 @@ export class MatTableConnectorService<T> {
 
   buildQuery(resetPaginator: boolean, paginator: MatPaginator, sort: MatSort, input: ElementRef): PagedSortedFilteringQuery {
     const filter: string = input.nativeElement.value;
-    const doFilter: boolean = filter.length > 0;
     const sortDirection: string = sort.direction;
-    const doSort: boolean = (sortDirection !== '') && doFilter;
+    const doSort: boolean = sortDirection !== '';
     return {
       pageIndex: resetPaginator ? 0 : paginator.pageIndex,
       pageSize: paginator.pageSize,
