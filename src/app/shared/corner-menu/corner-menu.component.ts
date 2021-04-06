@@ -1,12 +1,17 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatMenuTrigger} from '@angular/material/menu';
 import {MatDialog} from '@angular/material/dialog';
-import {AddChannelDialogComponent, ChannelDialogData, ChannelDialogPayload} from './add-channel-dialog/add-channel-dialog.component';
+import {
+  AddChannelDialogComponent,
+  ChannelDialogData,
+  ChannelDialogPayload
+} from './add-channel-dialog/add-channel-dialog.component';
 import {catchError, filter, map} from 'rxjs/operators';
-import {ChannelsService} from '../rest/channels.service';
+
 import {EMPTY} from 'rxjs';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {flatMap} from 'rxjs/internal/operators';
+import {ChannelsService} from '../../core/rest/channels.service';
 
 @Component({
   selector: 'app-corner-menu',

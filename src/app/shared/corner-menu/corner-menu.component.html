@@ -4,17 +4,17 @@
     <span>Add a channel</span>
   </button>
   <mat-divider></mat-divider>
-  <button mat-menu-item>
+  <button mat-menu-item routerLink="/channels">
     <mat-icon>ondemand_video</mat-icon>
-    <a routerLink="/channels">Channels</a>
+    <span>Channels</span>
   </button>
-  <button mat-menu-item>
+  <button mat-menu-item routerLink="/videos">
     <mat-icon>smart_display</mat-icon>
-    <a routerLink="/videos">Videos</a>
+    <span>Videos</span>
   </button>
-  <button mat-menu-item>
+  <button mat-menu-item routerLink="/comments">
     <mat-icon>forum</mat-icon>
-    <a routerLink="/comments">Comments</a>
+    <span>Comments</span>
   </button>
 </mat-menu>
 <button mat-icon-button color="primary" [matMenuTriggerFor]="menu" #menuTrigger>

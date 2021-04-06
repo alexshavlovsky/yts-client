@@ -4,7 +4,7 @@ import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {PagedSortedFilteringQuery} from './paged-sorted-filtering-query';
-import {GenericPagedDataSource} from '../datasources/generic-paged-data-source';
+import {GenericPagedDataSource} from './generic-paged-data-source';
 import {PageableRequest} from '../model/pageable-request';
 
 @Injectable({

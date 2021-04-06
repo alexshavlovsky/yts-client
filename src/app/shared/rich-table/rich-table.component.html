@@ -15,7 +15,7 @@
     <button mat-icon-button style="float: right" color="primary" (click)="isSearchOn=true">
       <mat-icon>search</mat-icon>
     </button>
-    <div class="header-title">Videos</div>
+    <div class="header-title">{{tableTitle}}</div>
   </div>
 
   <div class="search-container" [style.visibility]="isSearchOn ? 'visible' : 'hidden'">

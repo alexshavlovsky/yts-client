@@ -5,14 +5,15 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material.module';
-import {CommentsComponent} from './comments/comments.component';
+import {CommentsComponent} from './features/comments/comments.component';
 import {HttpClientModule} from '@angular/common/http';
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material/snack-bar';
-import {BasicCellComponent} from './core/basic-cell/basic-cell.component';
-import {CornerMenuComponent} from './core/corner-menu/corner-menu.component';
-import {ChannelsComponent} from './channels/channels.component';
-import {VideosComponent} from './videos/videos.component';
-import {AddChannelDialogComponent} from './core/corner-menu/add-channel-dialog/add-channel-dialog.component';
+import {BasicCellComponent} from './shared/basic-cell/basic-cell.component';
+import {CornerMenuComponent} from './shared/corner-menu/corner-menu.component';
+import {ChannelsComponent} from './features/channels/channels.component';
+import {VideosComponent} from './features/videos/videos.component';
+import {AddChannelDialogComponent} from './shared/corner-menu/add-channel-dialog/add-channel-dialog.component';
+import { RichTableComponent } from './shared/rich-table/rich-table.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {AddChannelDialogComponent} from './core/corner-menu/add-channel-dialog/a
     CornerMenuComponent,
     ChannelsComponent,
     VideosComponent,
-    AddChannelDialogComponent
+    AddChannelDialogComponent,
+    RichTableComponent
   ],
   imports: [
     BrowserModule,

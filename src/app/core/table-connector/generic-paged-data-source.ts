@@ -7,7 +7,7 @@ import {AbstractPagedService} from '../rest/abstact-paged.service';
 
 export class GenericPagedDataSource<T> implements DataSource<T> {
 
-  constructor(private pagedService: AbstractPagedService<T>) {
+  constructor(private pagedService: AbstractPagedService<T> | null) {
   }
 
   protected static EMPTY_PAGE: PagedResponse<any> = {
@@ -38,6 +38,9 @@ export class GenericPagedDataSource<T> implements DataSource<T> {
   }
 
   load(pageableRequest: PageableRequest, filter?: { [p: string]: string }): void {
+    if (this.pagedService == null) {
+      return;
+    }
     this.loadingSubject.next(true);
     this.pagedService.find(pageableRequest, filter).pipe(
       catchError(error => {
