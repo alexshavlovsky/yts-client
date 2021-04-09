@@ -17,9 +17,9 @@ export class VideosComponent {
   service = this.videosService;
 
   columnsSpec: ColumnSpec[] = [
-    {title: 'Channel', property: 'channelId', class: 'a-left flex2', linkBuilder: DEF_CHANNEL_LINK_BUILDER},
+    {title: 'Channel', property: 'channelTitle', class: 'a-left flex2', linkBuilder: DEF_CHANNEL_LINK_BUILDER, sortProperty: 'channel'},
     {title: 'Title', property: 'title', class: 'a-left flex4', linkBuilder: DEF_VIDEO_LINK_BUILDER},
-    {title: 'Published', property: 'publishedTimeText', class: 'a-left flex1'},
+    {title: 'Published', property: 'publishedTimeText', class: 'a-left flex1', sortProperty: 'publishedDate'},
     {title: 'View count', property: 'viewCountText', class: 'a-left flex1'},
     {title: 'Comment count', property: 'totalCommentCount', class: 'a-left flex1'},
   ];

@@ -4,6 +4,7 @@ export interface CommentResponse {
   authorText: string;
   channelId: string;
   publishedTimeText: string;
+  publishedDate: Date;
   text: string;
   likeCount: number;
   replyCount: number;

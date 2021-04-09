@@ -31,7 +31,9 @@
   <div class="content">
     <mat-table [dataSource]="dataSource" matSort>
       <ng-container *ngFor="let column of columnsSpec" [matColumnDef]="column.property">
-        <mat-header-cell [ngClass]="column.class" *matHeaderCellDef mat-sort-header>{{column.title}}</mat-header-cell>
+        <mat-header-cell [ngClass]="column.class" *matHeaderCellDef
+                         [mat-sort-header]="column.sortProperty?column.sortProperty:column.property"
+                         [disabled]="column.sortDisabled">{{column.title}}</mat-header-cell>
         <mat-cell [ngClass]="column.class" *matCellDef="let element">
           <app-basic-cell [spec]="column" [el]="element"></app-basic-cell>
         </mat-cell>

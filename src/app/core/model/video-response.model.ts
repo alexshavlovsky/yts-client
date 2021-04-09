@@ -3,6 +3,7 @@ export interface VideoResponse {
   channelId: string;
   title: string;
   publishedTimeText: string;
+  publishedDate: Date;
   viewCountText: number;
   totalCommentCount: number;
 }

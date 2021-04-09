@@ -17,6 +17,8 @@ export interface ColumnSpec {
   title: string;
   property: string;
   class: string;
+  sortProperty?: string;
+  sortDisabled?: boolean;
   linkBuilder?: LinkBuilder;
   biLinkBuilder?: BiLinkBuilder;
 }
