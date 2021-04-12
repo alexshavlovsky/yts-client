@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {PageableRequest} from '../model/pageable-request';
 import {PagedResponse} from '../model/paged-response.model';
-import {ChannelResponse} from '../model/channel-response.model';
+import {ChannelResponse, ChannelSummaryResponse} from '../model/channel-response.model';
 import {AbstractPagedService} from './abstact-paged.service';
 import {AddChannelRequest} from '../model/add-channel-request';
 import {AddChannelResponse} from '../model/add-channel-response';
@@ -24,6 +24,10 @@ export class ChannelsService extends AbstractPagedService<ChannelResponse> {
 
   addChannel(payload: AddChannelRequest): Observable<AddChannelResponse> {
     return this.http.post<AddChannelResponse>('/api/channels', payload, {headers: AbstractPagedService.CONTENT_JSON_ACCEPT_JSON});
+  }
+
+  getChannelSummary(id: string): Observable<ChannelSummaryResponse> {
+    return this.http.get<ChannelSummaryResponse>('/api/channels/' + id, {headers: AbstractPagedService.CONTENT_JSON_ACCEPT_JSON});
   }
 
 }
