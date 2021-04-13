@@ -1,4 +1,4 @@
-import {AfterContentInit, AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild} from '@angular/core';
+import {AfterContentInit, Component, ElementRef, Input, OnDestroy, ViewChild} from '@angular/core';
 import {ColumnSpec} from '../../core/table-connector/column-spec';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatTableConnectorService} from '../../core/table-connector/mat-table-connector.service';
@@ -7,6 +7,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {Subscription} from 'rxjs';
 import {AbstractPagedService} from '../../core/rest/abstact-paged.service';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-rich-table',
@@ -16,7 +17,8 @@ import {AbstractPagedService} from '../../core/rest/abstact-paged.service';
 export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
 
   constructor(private snackBar: MatSnackBar,
-              private matTableAdapterService: MatTableConnectorService<T>) {
+              private matTableAdapterService: MatTableConnectorService<T>,
+              private titleService: Title) {
   }
 
   dataSource: GenericPagedDataSource<T> = new GenericPagedDataSource(null);
@@ -35,6 +37,7 @@ export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
   sub = new Subscription();
 
   ngAfterContentInit(): void {
+    this.titleService.setTitle(this.tableTitle);
     this.displayedColumns = this.columnsSpec.map(column => column.property);
     this.dataSource = new GenericPagedDataSource<T>(this.service);
     this.sub.add(this.matTableAdapterService.connect(this.paginator, this.sort, this.input, this.dataSource).subscribe());

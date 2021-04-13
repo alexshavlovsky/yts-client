@@ -1,7 +1,13 @@
 <ng-container *ngIf="link; then linkContent else basicContent"></ng-container>
 <ng-template #linkContent>
+  <button *ngIf="ctxMenuData" mat-icon-button [matMenuTriggerFor]="ctxMenu" [matMenuTriggerData]="ctxMenuData">
+    <mat-icon>more_vert</mat-icon>
+  </button>
   <a target="_blank" href="{{link}}">{{text}}</a>
 </ng-template>
 <ng-template #basicContent>
+  <button *ngIf="ctxMenuData" mat-icon-button [matMenuTriggerFor]="ctxMenu" [matMenuTriggerData]="ctxMenuData">
+    <mat-icon>more_vert</mat-icon>
+  </button>
   {{text}}
 </ng-template>

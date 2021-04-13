@@ -11,6 +11,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatCardModule} from '@angular/material/card';
 
 
 @NgModule({
@@ -28,6 +30,8 @@ import {MatDividerModule} from '@angular/material/divider';
     MatDialogModule,
     ReactiveFormsModule,
     MatDividerModule,
+    MatTabsModule,
+    MatCardModule,
   ],
   exports: [
     MatInputModule,
@@ -43,6 +47,8 @@ import {MatDividerModule} from '@angular/material/divider';
     MatDialogModule,
     ReactiveFormsModule,
     MatDividerModule,
+    MatTabsModule,
+    MatCardModule,
   ],
 })
 export class MaterialModule {

@@ -2,6 +2,15 @@
   <mat-spinner></mat-spinner>
 </div>
 
+<mat-menu #contextMenu="matMenu">
+  <ng-template matMenuContent let-items="items">
+    <a *ngFor="let item of items" mat-menu-item [href]="item.link" target="_blank">
+      <mat-icon>{{item.icon}}</mat-icon>
+      <span>{{item.name}}</span>
+    </a>
+  </ng-template>
+</mat-menu>
+
 <div class="parent">
 
   <div class="shadow-container">
@@ -35,7 +44,7 @@
                          [mat-sort-header]="column.sortProperty?column.sortProperty:column.property"
                          [disabled]="column.sortDisabled">{{column.title}}</mat-header-cell>
         <mat-cell [ngClass]="column.class" *matCellDef="let element">
-          <app-basic-cell [spec]="column" [el]="element"></app-basic-cell>
+          <app-basic-cell [ctxMenu]="contextMenu" [spec]="column" [el]="element"></app-basic-cell>
         </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>

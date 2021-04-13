@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import {BrowserModule, Title} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -13,7 +13,8 @@ import {CornerMenuComponent} from './shared/corner-menu/corner-menu.component';
 import {ChannelsComponent} from './features/channels/channels.component';
 import {VideosComponent} from './features/videos/videos.component';
 import {AddChannelDialogComponent} from './shared/corner-menu/add-channel-dialog/add-channel-dialog.component';
-import { RichTableComponent } from './shared/rich-table/rich-table.component';
+import {RichTableComponent} from './shared/rich-table/rich-table.component';
+import {ChannelSummaryComponent} from './features/channel-summary/channel-summary.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { RichTableComponent } from './shared/rich-table/rich-table.component';
     ChannelsComponent,
     VideosComponent,
     AddChannelDialogComponent,
-    RichTableComponent
+    RichTableComponent,
+    ChannelSummaryComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +35,7 @@ import { RichTableComponent } from './shared/rich-table/rich-table.component';
     MaterialModule,
     HttpClientModule,
   ],
-  providers: [{provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000}}],
+  providers: [{provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000}}, Title],
   bootstrap: [AppComponent],
   entryComponents: [AddChannelDialogComponent]
 })

@@ -1,3 +1,5 @@
+import {ContextMenuBuilder} from '../../shared/rich-table/context-menu.data';
+
 export type LinkBuilderStrategy = (id: string) => string;
 
 export type BiLinkBuilderStrategy = (id1: string, id2: string) => string;
@@ -21,6 +23,8 @@ export interface ColumnSpec {
   sortDisabled?: boolean;
   linkBuilder?: LinkBuilder;
   biLinkBuilder?: BiLinkBuilder;
+  ctxMenuBuilder?: ContextMenuBuilder;
+  hideText?: boolean;
 }
 
 export const YT_CHANNEL_LINK_BUILDER_STRATEGY: LinkBuilderStrategy = (id => 'https://www.youtube.com/channel/' + id);
@@ -34,4 +38,11 @@ export const DEF_COMMENT_BI_LINK_BUILDER: BiLinkBuilder = {
   idKey1: 'videoId',
   idKey2: 'commentId',
   builder: YT_COMMENT_LINK_BUILDER_STRATEGY
+};
+
+
+export const ROUTER_CHANNEL_SUMMARY_LINK_BUILDER_STRATEGY: LinkBuilderStrategy = (id => '/channels/' + id);
+export const DEF_ROUTER_CHANNEL_SUMMARY_LINK_BUILDER: LinkBuilder = {
+  idKey: 'channelId',
+  builder: ROUTER_CHANNEL_SUMMARY_LINK_BUILDER_STRATEGY
 };
