@@ -6,4 +6,5 @@ export interface VideoResponse {
   publishedDate: Date;
   viewCountText: number;
   totalCommentCount: number;
+  shortStatus: string;
 }

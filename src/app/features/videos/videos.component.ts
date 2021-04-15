@@ -33,6 +33,7 @@ export class VideosComponent {
     {title: 'Published', property: 'publishedTimeText', class: 'a-right flex1', sortProperty: 'publishedDate'},
     {title: 'View count', property: 'viewCountText', class: 'a-right flex1'},
     {title: 'Comment count', property: 'totalCommentCount', class: 'a-right flex1'},
+    {title: 'Status', property: 'shortStatus', class: 'a-center flex1', sortProperty: 'contextStatus_statusCode'},
   ];
 
 }

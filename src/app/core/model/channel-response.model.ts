@@ -8,6 +8,7 @@ export interface ChannelResponse {
   title: string;
   videoCount: number;
   subscriberCount: bigint;
+  shortStatus: string;
 }
 
 export interface ChannelDetailedResponse extends ChannelResponse {

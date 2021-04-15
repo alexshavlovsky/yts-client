@@ -28,6 +28,7 @@ export class ChannelsComponent {
     {title: 'Title', property: 'title', class: 'a-left flex4', linkBuilder: DEF_CHANNEL_LINK_BUILDER},
     {title: 'Video count', property: 'videoCount', class: 'a-right flex1'},
     {title: 'Subscribers', property: 'subscriberCount', class: 'a-right flex1'},
+    {title: 'Status', property: 'shortStatus', class: 'a-center flex1', sortProperty: 'contextStatus_statusCode'},
   ];
 
 }
