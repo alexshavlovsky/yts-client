@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {ChannelsService} from '../../core/rest/channels.service';
 import {ChannelSummaryResponse} from '../../core/model/channel-response.model';
 import {ColumnSpec, DEF_VIDEO_LINK_BUILDER, YT_CHANNEL_LINK_BUILDER_STRATEGY} from '../../core/table-connector/column-spec';
-import {catchError} from 'rxjs/operators';
+import {catchError, finalize} from 'rxjs/operators';
 import {EMPTY} from 'rxjs';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Title} from '@angular/platform-browser';
@@ -17,10 +17,6 @@ import {QuerySpec} from '../../core/model/query-spec.model';
 })
 export class ChannelSummaryComponent implements OnInit {
 
-  readonly channelId = this.route.snapshot.paramMap.get('channelId');
-  summary?: ChannelSummaryResponse;
-  link?: string;
-
   constructor(private route: ActivatedRoute,
               private channelsService: ChannelsService,
               private videosService: VideosService,
@@ -28,8 +24,14 @@ export class ChannelSummaryComponent implements OnInit {
               private titleService: Title) {
   }
 
+  readonly channelId = this.route.snapshot.paramMap.get('channelId');
+  summary?: ChannelSummaryResponse;
+  link?: string;
+
   service = this.videosService;
   staticQuery: QuerySpec = this.channelId ? {channelId: this.channelId} : {};
+  header = '';
+  deleteButtonDisabled = false;
 
   columnsSpec: ColumnSpec[] = [
     {
@@ -41,8 +43,13 @@ export class ChannelSummaryComponent implements OnInit {
     {title: 'Status', property: 'shortStatus', class: 'a-center flex1', sortProperty: 'contextStatus_statusCode'},
   ];
 
+  setHeaders(value: string): void {
+    this.header = value;
+    this.titleService.setTitle(value);
+  }
+
   ngOnInit(): void {
-    this.titleService.setTitle('Channel summary');
+    this.setHeaders('Channel summary');
     if (this.channelId) {
       const id = this.channelId;
       this.channelsService.getChannelSummary(id).pipe(
@@ -52,8 +59,24 @@ export class ChannelSummaryComponent implements OnInit {
         })
       ).subscribe(cs => {
         this.summary = cs;
-        this.titleService.setTitle(cs.channel.title);
+        this.setHeaders(cs.channel.title);
         this.link = YT_CHANNEL_LINK_BUILDER_STRATEGY(id);
+      });
+    }
+  }
+
+  deleteChannel(): void {
+    if (this.channelId) {
+      const id = this.channelId;
+      this.deleteButtonDisabled = true;
+      this.channelsService.deleteById(id).pipe(
+        catchError(error => {
+          this.snackBar.open(error.message, 'close');
+          return EMPTY;
+        }),
+        finalize(() => this.deleteButtonDisabled = false)
+      ).subscribe(response => {
+        this.snackBar.open(`Channel ${response.channelId} deleted`, 'close');
       });
     }
   }

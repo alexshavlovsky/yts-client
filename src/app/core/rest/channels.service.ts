@@ -31,4 +31,8 @@ export class ChannelsService extends AbstractPagedService<ChannelResponse> {
     return this.http.get<ChannelSummaryResponse>('/api/channels/' + id, {headers: AbstractPagedService.CONTENT_JSON_ACCEPT_JSON});
   }
 
+  deleteById(id: string): Observable<AddChannelResponse> {
+    return this.http.delete<AddChannelResponse>('/api/channels/' + id, {headers: AbstractPagedService.CONTENT_JSON_ACCEPT_JSON});
+  }
+
 }

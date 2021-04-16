@@ -1,11 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatMenuTrigger} from '@angular/material/menu';
 import {MatDialog} from '@angular/material/dialog';
-import {
-  AddChannelDialogComponent,
-  ChannelDialogData,
-  ChannelDialogPayload
-} from './add-channel-dialog/add-channel-dialog.component';
+import {AddChannelDialogComponent, ChannelDialogData, ChannelDialogPayload} from './add-channel-dialog/add-channel-dialog.component';
 import {catchError, filter, map} from 'rxjs/operators';
 
 import {EMPTY} from 'rxjs';
@@ -32,11 +28,11 @@ export class CornerMenuComponent implements OnInit {
 
   openDialog(): void {
     const data: ChannelDialogData = {
-      title: 'Add a channel',
+      title: 'Schedule a channel',
       channelIdPlaceholder: 'Channel ID',
       channelIdCurrent: '',
       cancelButton: 'Cancel',
-      confirmButton: 'Add',
+      confirmButton: 'Confirm',
     };
     this.dialog.open(AddChannelDialogComponent, {data, restoreFocus: false}).afterClosed().pipe(
       filter((payload: ChannelDialogPayload) => payload !== undefined),
@@ -46,7 +42,9 @@ export class CornerMenuComponent implements OnInit {
         this.snackBar.open(error.message, 'close');
         return EMPTY;
       })
-    ).subscribe();
+    ).subscribe(response => {
+      this.snackBar.open(`Channel ${response.channelId} scheduled`, 'close');
+    });
   }
 
 }

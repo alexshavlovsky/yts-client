@@ -8,13 +8,13 @@
   </div>
 
   <div class="header">
-    <div class="header-title">Channel summary</div>
+    <div class="header-title">{{header}}</div>
   </div>
 
   <div *ngIf="summary" class="content">
     <mat-tab-group>
       <mat-tab label="Summary">
-        <mat-card class="example-card">
+        <mat-card>
           <mat-card-header>
             <mat-card-title>{{summary.channel.title}}</mat-card-title>
             <mat-card-subtitle>{{summary.channel.channelVanityName}}</mat-card-subtitle>
@@ -104,6 +104,22 @@
             <td>{{log.contextStatus.statusTimestamp | date:'dd/MM/yyyy HH:mm:ss'}}</td>
             <td>{{log.contextStatus.statusCode}}</td>
             <td>{{log.contextStatus.statusMessage}}</td>
+          </tr>
+        </table>
+      </mat-tab>
+      <mat-tab label="Operations">
+        <table>
+          <tr>
+            <th>Description</th>
+            <th>Confirm</th>
+          </tr>
+          <tr>
+            <td>Delete the channel</td>
+            <td>
+              <button mat-flat-button color="warn" [disabled]="deleteButtonDisabled" (click)="deleteChannel()">
+                Delete
+              </button>
+            </td>
           </tr>
         </table>
       </mat-tab>
