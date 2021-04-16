@@ -2,11 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ChannelsService} from '../../core/rest/channels.service';
 import {ChannelSummaryResponse} from '../../core/model/channel-response.model';
-import {YT_CHANNEL_LINK_BUILDER_STRATEGY} from '../../core/table-connector/column-spec';
+import {ColumnSpec, DEF_VIDEO_LINK_BUILDER, YT_CHANNEL_LINK_BUILDER_STRATEGY} from '../../core/table-connector/column-spec';
 import {catchError} from 'rxjs/operators';
 import {EMPTY} from 'rxjs';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Title} from '@angular/platform-browser';
+import {VideosService} from '../../core/rest/videos.service';
+import {QuerySpec} from '../../core/model/query-spec.model';
 
 @Component({
   selector: 'app-channel-summary',
@@ -21,9 +23,23 @@ export class ChannelSummaryComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private channelsService: ChannelsService,
+              private videosService: VideosService,
               private snackBar: MatSnackBar,
               private titleService: Title) {
   }
+
+  service = this.videosService;
+  staticQuery: QuerySpec = this.channelId ? {channelId: this.channelId} : {};
+
+  columnsSpec: ColumnSpec[] = [
+    {
+      title: 'Title', property: 'title', class: 'a-left flex4', linkBuilder: DEF_VIDEO_LINK_BUILDER,
+    },
+    {title: 'Published', property: 'publishedTimeText', class: 'a-right flex1', sortProperty: 'publishedDate'},
+    {title: 'View count', property: 'viewCountText', class: 'a-right flex1'},
+    {title: 'Comment count', property: 'totalCommentCount', class: 'a-right flex1'},
+    {title: 'Status', property: 'shortStatus', class: 'a-center flex1', sortProperty: 'contextStatus_statusCode'},
+  ];
 
   ngOnInit(): void {
     this.titleService.setTitle('Channel summary');

@@ -7,6 +7,7 @@ import {ChannelResponse, ChannelSummaryResponse} from '../model/channel-response
 import {AbstractPagedService} from './abstact-paged.service';
 import {AddChannelRequest} from '../model/add-channel-request';
 import {AddChannelResponse} from '../model/add-channel-response';
+import {QuerySpec} from '../model/query-spec.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,8 @@ export class ChannelsService extends AbstractPagedService<ChannelResponse> {
     super();
   }
 
-  find(pageableRequest: PageableRequest, filter: { [property: string]: string } | undefined): Observable<PagedResponse<ChannelResponse>> {
-    const params = pageableRequest.getHttpParams(filter);
+  find(pageableRequest: PageableRequest, query: QuerySpec): Observable<PagedResponse<ChannelResponse>> {
+    const params = pageableRequest.getHttpParams(query);
     return this.http.get<PagedResponse<ChannelResponse>>('/api/channels', {params, headers: AbstractPagedService.ACCEPT_JSON});
   }
 

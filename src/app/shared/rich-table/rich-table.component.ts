@@ -8,6 +8,7 @@ import {MatSort} from '@angular/material/sort';
 import {Subscription} from 'rxjs';
 import {AbstractPagedService} from '../../core/rest/abstact-paged.service';
 import {Title} from '@angular/platform-browser';
+import {QuerySpec} from '../../core/model/query-spec.model';
 
 @Component({
   selector: 'app-rich-table',
@@ -27,6 +28,8 @@ export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
   @Input() tableTitle!: string;
   @Input() columnsSpec!: ColumnSpec[];
   @Input() service!: AbstractPagedService<T>;
+  @Input() standalone!: boolean;
+  @Input() staticQuery!: QuerySpec;
 
   displayedColumns!: string[];
 
@@ -37,10 +40,13 @@ export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
   sub = new Subscription();
 
   ngAfterContentInit(): void {
-    this.titleService.setTitle(this.tableTitle);
+    if (!this.standalone) {
+      this.titleService.setTitle(this.tableTitle);
+    }
     this.displayedColumns = this.columnsSpec.map(column => column.property);
     this.dataSource = new GenericPagedDataSource<T>(this.service);
-    this.sub.add(this.matTableAdapterService.connect(this.paginator, this.sort, this.input, this.dataSource).subscribe());
+    this.sub.add(this.matTableAdapterService
+      .connect(this.paginator, this.sort, this.input, this.dataSource, this.staticQuery ? this.staticQuery : {}).subscribe());
     this.sub.add(this.dataSource.error$.subscribe(message => this.snackBar.open(message, 'close')));
   }
 

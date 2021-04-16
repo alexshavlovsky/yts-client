@@ -87,24 +87,11 @@
         </mat-card>
       </mat-tab>
       <mat-tab label="Videos">
-        <table>
-          <tr>
-            <th>#</th>
-            <th>Title</th>
-            <th>Published</th>
-            <th>View count</th>
-            <th>Total comment count</th>
-            <th>Status code</th>
-          </tr>
-          <tr *ngFor="let video of summary.videos; let i = index">
-            <td>{{i+1}}</td>
-            <td>{{video.title}}</td>
-            <td>{{video.publishedTimeText}}</td>
-            <td>{{video.viewCountText}}</td>
-            <td>{{video.totalCommentCount}}</td>
-            <td>{{video.contextStatus.statusCode}}</td>
-          </tr>
-        </table>
+        <app-rich-table [columnsSpec]="columnsSpec"
+                        [tableTitle]="''"
+                        [service]="service"
+                        [standalone]="true"
+                        [staticQuery]="staticQuery"></app-rich-table>
       </mat-tab>
       <mat-tab label="Log">
         <table>

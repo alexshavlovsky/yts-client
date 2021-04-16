@@ -1,4 +1,5 @@
 import {HttpParams} from '@angular/common/http';
+import {QuerySpec} from './query-spec.model';
 
 export class PageableRequest {
   private readonly page: number;
@@ -13,7 +14,7 @@ export class PageableRequest {
     this.size = size;
   }
 
-  getHttpParams(params?: { [param: string]: string }): HttpParams {
+  getHttpParams(params?: QuerySpec): HttpParams {
     let httpParams = new HttpParams()
       .set('page', this.page.toString())
       .set('size', this.size.toString());

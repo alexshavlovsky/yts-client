@@ -5,6 +5,7 @@ import {PageableRequest} from '../model/pageable-request';
 import {PagedResponse} from '../model/paged-response.model';
 import {AbstractPagedService} from './abstact-paged.service';
 import {VideoResponse} from '../model/video-response.model';
+import {QuerySpec} from '../model/query-spec.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,8 @@ export class VideosService extends AbstractPagedService<VideoResponse> {
     super();
   }
 
-  find(pageableRequest: PageableRequest, filter: { [property: string]: string } | undefined): Observable<PagedResponse<VideoResponse>> {
-    const params = pageableRequest.getHttpParams(filter);
+  find(pageableRequest: PageableRequest, query: QuerySpec): Observable<PagedResponse<VideoResponse>> {
+    const params = pageableRequest.getHttpParams(query);
     return this.http.get<PagedResponse<VideoResponse>>('/api/videos', {
       params,
       headers: AbstractPagedService.ACCEPT_JSON

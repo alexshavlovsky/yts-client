@@ -4,6 +4,7 @@ import {PagedResponse} from '../model/paged-response.model';
 import {PageableRequest} from '../model/pageable-request';
 import {catchError, finalize} from 'rxjs/operators';
 import {AbstractPagedService} from '../rest/abstact-paged.service';
+import {QuerySpec} from '../model/query-spec.model';
 
 export class GenericPagedDataSource<T> implements DataSource<T> {
 
@@ -37,12 +38,12 @@ export class GenericPagedDataSource<T> implements DataSource<T> {
     this.loadingSubject.complete();
   }
 
-  load(pageableRequest: PageableRequest, filter?: { [p: string]: string }): void {
+  load(pageableRequest: PageableRequest, query: QuerySpec): void {
     if (this.pagedService == null) {
       return;
     }
     this.loadingSubject.next(true);
-    this.pagedService.find(pageableRequest, filter).pipe(
+    this.pagedService.find(pageableRequest, query).pipe(
       catchError(error => {
         this.errorSubject.next(error.message);
         return of(GenericPagedDataSource.EMPTY_PAGE);
