@@ -87,7 +87,7 @@ export class VideoSummaryComponent implements OnInit {
           this.showSpinner = false;
         })
       ).subscribe(response => {
-        this.snackBar.open(`Channel ${response.videoId} deleted`, 'close');
+        this.snackBar.open(`Video ${response.videoId} deleted`, 'close');
         this.router.navigate(['/videos']);
       });
     }

@@ -1,14 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable, of, throwError} from 'rxjs';
+import {Observable} from 'rxjs';
 import {PageableRequest} from '../model/pageable-request';
 import {PagedResponse} from '../model/paged-response.model';
 import {AbstractPagedService} from './abstact-paged.service';
 import {VideoResponse, VideoSummaryResponse} from '../model/video-response.model';
 import {QuerySpec} from '../model/query-spec.model';
-import {delay} from 'rxjs/operators';
 import {VideoIdModel} from '../model/video-id-model';
-import {flatMap} from 'rxjs/internal/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -32,11 +30,7 @@ export class VideosService extends AbstractPagedService<VideoResponse> {
   }
 
   deleteById(id: string): Observable<VideoIdModel> {
-    // TODO implement this
-    return of('not implemented').pipe(
-      delay(1000),
-      flatMap(msg => throwError({message: msg}))
-    );
+    return this.http.delete<VideoIdModel>('/api/videos/' + id, {headers: AbstractPagedService.CONTENT_JSON_ACCEPT_JSON});
   }
 
 }

@@ -6,6 +6,7 @@ import {
   DEF_COMMENT_BI_LINK_BUILDER,
   DEF_VIDEO_LINK_BUILDER
 } from '../../core/table-connector/column-spec';
+import {DEF_VIDEO_CTX_MENU_BUILDER} from '../../shared/rich-table/context-menu.data';
 
 @Component({
   selector: 'app-comments',
@@ -27,7 +28,8 @@ export class CommentsComponent {
       property: 'videoTitle',
       class: 'a-left flex2 nowrap',
       linkBuilder: DEF_VIDEO_LINK_BUILDER,
-      sortProperty: 'video'
+      sortProperty: 'video',
+      ctxMenuBuilder: DEF_VIDEO_CTX_MENU_BUILDER
     },
     {title: 'Author', property: 'authorText', class: 'a-left flex2', linkBuilder: DEF_CHANNEL_LINK_BUILDER},
     {title: 'Comment', property: 'text', class: 'a-left flex8', biLinkBuilder: DEF_COMMENT_BI_LINK_BUILDER},
