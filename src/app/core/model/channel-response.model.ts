@@ -1,6 +1,5 @@
 import {ContextStatusResponse} from './context-status-response.model';
 import {WorkerLogResponse} from './worker-log-response.model';
-import {VideoResponse} from './video-response.model';
 
 export interface ChannelResponse {
   channelId: string;
@@ -18,15 +17,8 @@ export interface ChannelDetailedResponse extends ChannelResponse {
   contextStatus: ContextStatusResponse;
 }
 
-export interface VideoDetailedResponse extends VideoResponse {
-  createdDate: Date;
-  lastUpdatedDate: Date;
-  contextStatus: ContextStatusResponse;
-}
-
 export interface ChannelSummaryResponse {
   channel: ChannelDetailedResponse;
-  videos: VideoDetailedResponse[];
   log: WorkerLogResponse[];
   totalComments: number;
 }

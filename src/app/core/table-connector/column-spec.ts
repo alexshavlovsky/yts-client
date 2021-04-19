@@ -40,9 +40,14 @@ export const DEF_COMMENT_BI_LINK_BUILDER: BiLinkBuilder = {
   builder: YT_COMMENT_LINK_BUILDER_STRATEGY
 };
 
-
 export const ROUTER_CHANNEL_SUMMARY_LINK_BUILDER_STRATEGY: LinkBuilderStrategy = (id => '/channels/' + id);
 export const DEF_ROUTER_CHANNEL_SUMMARY_LINK_BUILDER: LinkBuilder = {
   idKey: 'channelId',
   builder: ROUTER_CHANNEL_SUMMARY_LINK_BUILDER_STRATEGY
+};
+
+export const ROUTER_VIDEO_SUMMARY_LINK_BUILDER_STRATEGY: LinkBuilderStrategy = (id => '/videos/' + id);
+export const DEF_ROUTER_VIDEO_SUMMARY_LINK_BUILDER: LinkBuilder = {
+  idKey: 'videoId',
+  builder: ROUTER_VIDEO_SUMMARY_LINK_BUILDER_STRATEGY
 };

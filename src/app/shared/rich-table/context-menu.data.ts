@@ -1,6 +1,7 @@
 import {
   DEF_CHANNEL_LINK_BUILDER,
   DEF_ROUTER_CHANNEL_SUMMARY_LINK_BUILDER,
+  DEF_ROUTER_VIDEO_SUMMARY_LINK_BUILDER,
   DEF_VIDEO_LINK_BUILDER,
   LinkBuilder
 } from '../../core/table-connector/column-spec';
@@ -31,6 +32,12 @@ export const DEF_CHANNEL_SHOW_SUMMARY_CTX_MENU_ITEM_BUILDER: ContextMenuItemBuil
   linkBuilder: DEF_ROUTER_CHANNEL_SUMMARY_LINK_BUILDER
 };
 
+export const DEF_VIDEO_SHOW_SUMMARY_CTX_MENU_ITEM_BUILDER: ContextMenuItemBuilder = {
+  name: 'Show video summary',
+  icon: 'pageview',
+  linkBuilder: DEF_ROUTER_VIDEO_SUMMARY_LINK_BUILDER
+};
+
 export const DEF_CHANNEL_OPEN_ON_YOUTUBE_CTX_MENU_ITEM_BUILDER: ContextMenuItemBuilder = {
   name: 'Open channel on Youtube',
   icon: 'open_in_browser',
@@ -52,6 +59,7 @@ export const DEF_CHANNEL_CTX_MENU_BUILDER: ContextMenuBuilder = {
 
 export const DEF_VIDEO_CTX_MENU_BUILDER: ContextMenuBuilder = {
   itemBuilders: [
+    DEF_VIDEO_SHOW_SUMMARY_CTX_MENU_ITEM_BUILDER,
     DEF_VIDEO_OPEN_ON_YOUTUBE_CTX_MENU_ITEM_BUILDER
   ]
 };

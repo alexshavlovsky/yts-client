@@ -4,7 +4,7 @@
 
 <mat-menu #contextMenu="matMenu">
   <ng-template matMenuContent let-items="items">
-    <a *ngFor="let item of items" mat-menu-item [href]="item.link" target="_blank">
+    <a *ngFor="let item of items" mat-menu-item [href]="item.link">
       <mat-icon>{{item.icon}}</mat-icon>
       <span>{{item.name}}</span>
     </a>

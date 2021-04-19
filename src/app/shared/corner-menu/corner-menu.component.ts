@@ -1,13 +1,18 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatMenuTrigger} from '@angular/material/menu';
 import {MatDialog} from '@angular/material/dialog';
-import {AddChannelDialogComponent, ChannelDialogData, ChannelDialogPayload} from './add-channel-dialog/add-channel-dialog.component';
+import {
+  AddChannelDialogComponent,
+  ChannelDialogData,
+  ChannelDialogPayload
+} from './add-channel-dialog/add-channel-dialog.component';
 import {catchError, filter, map} from 'rxjs/operators';
 
 import {EMPTY} from 'rxjs';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {flatMap} from 'rxjs/internal/operators';
 import {ChannelsService} from '../../core/rest/channels.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-corner-menu',
@@ -19,6 +24,7 @@ export class CornerMenuComponent implements OnInit {
   @ViewChild('menuTrigger') menuTrigger!: MatMenuTrigger;
 
   constructor(private dialog: MatDialog,
+              private router: Router,
               private channelsService: ChannelsService,
               private snackBar: MatSnackBar) {
   }
@@ -44,6 +50,7 @@ export class CornerMenuComponent implements OnInit {
       })
     ).subscribe(response => {
       this.snackBar.open(`Channel ${response.channelId} scheduled`, 'close');
+      this.router.navigate(['/channels', response.channelId]);
     });
   }
 

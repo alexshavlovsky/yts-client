@@ -20,77 +20,73 @@
       <mat-tab label="Summary">
         <mat-card>
           <mat-card-header>
-            <mat-card-title>{{summary.channel.title}}</mat-card-title>
-            <mat-card-subtitle>{{summary.channel.channelVanityName}}</mat-card-subtitle>
+            <mat-card-title>{{summary.video.title}}</mat-card-title>
+            <mat-card-subtitle>{{summary.video.videoId}}</mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
             <table>
               <tr>
-                <td><h4>Channel details</h4></td>
+                <td><h4>Video details</h4></td>
               </tr>
               <tr>
                 <td>Title</td>
-                <td>{{summary.channel.title}}</td>
+                <td>{{summary.video.title}}</td>
               </tr>
               <tr>
                 <td>Youtube Id</td>
-                <td>{{summary.channel.channelId}}</td>
+                <td>{{summary.video.videoId}}</td>
               </tr>
               <tr>
-                <td>Youtube vanity name</td>
-                <td>{{summary.channel.channelVanityName}}</td>
+                <td>Youtube channel Id</td>
+                <td>{{summary.video.channelId}}</td>
               </tr>
               <tr>
                 <td>Youtube link</td>
                 <td><a [href]="link">{{link}}</a></td>
               </tr>
               <tr>
-                <td>Subscriber count</td>
-                <td>{{summary.channel.subscriberCount}}</td>
+                <td>Published</td>
+                <td>{{summary.video.publishedDate | date:'dd/MM/yyyy HH:mm:ss'}}</td>
               </tr>
               <tr>
-                <td>Video count</td>
-                <td>{{summary.channel.videoCount}}</td>
-              </tr>
-              <tr>
-                <td>Fetched video count</td>
-                <td>{{summary.channel.fetchedVideoCount}}</td>
+                <td>View count</td>
+                <td>{{summary.video.viewCountText}}</td>
               </tr>
               <tr>
                 <td>Comment count</td>
-                <td>{{summary.totalComments}}</td>
+                <td>{{summary.totalComments}} of {{summary.video.totalCommentCount}}</td>
               </tr>
               <tr>
                 <td><h4>Internal timestamps</h4></td>
               </tr>
               <tr>
                 <td>Created</td>
-                <td>{{summary.channel.createdDate| date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                <td>{{summary.video.createdDate| date:'dd/MM/yyyy HH:mm:ss'}}</td>
               </tr>
               <tr>
                 <td>Updated</td>
-                <td>{{summary.channel.lastUpdatedDate| date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                <td>{{summary.video.lastUpdatedDate| date:'dd/MM/yyyy HH:mm:ss'}}</td>
               </tr>
               <tr>
                 <td><h4>Internal status</h4></td>
               </tr>
               <tr>
                 <td>Short code</td>
-                <td>{{summary.channel.contextStatus.statusCode}}</td>
+                <td>{{summary.video.contextStatus.statusCode}}</td>
               </tr>
               <tr>
                 <td>Timestamp</td>
-                <td>{{summary.channel.contextStatus.statusTimestamp | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                <td>{{summary.video.contextStatus.statusTimestamp | date:'dd/MM/yyyy HH:mm:ss'}}</td>
               </tr>
               <tr>
                 <td>Message</td>
-                <td>{{summary.channel.contextStatus.statusMessage}}</td>
+                <td>{{summary.video.contextStatus.statusMessage}}</td>
               </tr>
             </table>
           </mat-card-content>
         </mat-card>
       </mat-tab>
-      <mat-tab label="Videos">
+      <mat-tab label="Comments">
         <app-rich-table [columnsSpec]="columnsSpec"
                         [tableTitle]="''"
                         [service]="service"
@@ -118,7 +114,7 @@
             <th>Confirm</th>
           </tr>
           <tr>
-            <td>Delete the channel</td>
+            <td>Delete the video</td>
             <td>
               <button mat-flat-button color="warn" [disabled]="deleteButtonDisabled" (click)="deleteChannel()">
                 Delete

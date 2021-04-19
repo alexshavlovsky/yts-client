@@ -21,7 +21,7 @@ export class VideosComponent {
     {
       title: 'Channel',
       property: 'channelTitle',
-      class: 'a-left flex2',
+      class: 'a-left flex2 nowrap',
       linkBuilder: DEF_CHANNEL_LINK_BUILDER,
       sortProperty: 'channel',
       ctxMenuBuilder: DEF_CHANNEL_CTX_MENU_BUILDER
@@ -30,10 +30,10 @@ export class VideosComponent {
       title: 'Title', property: 'title', class: 'a-left flex4', linkBuilder: DEF_VIDEO_LINK_BUILDER,
       ctxMenuBuilder: DEF_VIDEO_CTX_MENU_BUILDER
     },
-    {title: 'Published', property: 'publishedTimeText', class: 'a-right flex1', sortProperty: 'publishedDate'},
-    {title: 'View count', property: 'viewCountText', class: 'a-right flex1'},
-    {title: 'Comment count', property: 'totalCommentCount', class: 'a-right flex1'},
-    {title: 'Status', property: 'shortStatus', class: 'a-center flex1', sortProperty: 'contextStatus_statusCode'},
+    {title: 'Published', property: 'publishedTimeText', class: 'a-left flex1 nowrap', sortProperty: 'publishedDate'},
+    {title: 'View count', property: 'viewCountText', class: 'a-left flex1'},
+    {title: 'Comment count', property: 'totalCommentCount', class: 'a-left flex1'},
+    {title: 'Status', property: 'shortStatus', class: 'a-left flex1 nowrap', sortProperty: 'contextStatus_statusCode'},
   ];
 
 }

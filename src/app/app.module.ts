@@ -15,6 +15,7 @@ import {VideosComponent} from './features/videos/videos.component';
 import {AddChannelDialogComponent} from './shared/corner-menu/add-channel-dialog/add-channel-dialog.component';
 import {RichTableComponent} from './shared/rich-table/rich-table.component';
 import {ChannelSummaryComponent} from './features/channel-summary/channel-summary.component';
+import {VideoSummaryComponent} from './features/video-summary/video-summary.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {ChannelSummaryComponent} from './features/channel-summary/channel-summar
     VideosComponent,
     AddChannelDialogComponent,
     RichTableComponent,
-    ChannelSummaryComponent
+    ChannelSummaryComponent,
+    VideoSummaryComponent
   ],
   imports: [
     BrowserModule,

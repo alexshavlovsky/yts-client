@@ -26,9 +26,10 @@ export class ChannelsComponent {
       ctxMenuBuilder: DEF_CHANNEL_CTX_MENU_BUILDER
     },
     {title: 'Title', property: 'title', class: 'a-left flex4', linkBuilder: DEF_CHANNEL_LINK_BUILDER},
-    {title: 'Video count', property: 'videoCount', class: 'a-right flex1'},
-    {title: 'Subscribers', property: 'subscriberCount', class: 'a-right flex1'},
-    {title: 'Status', property: 'shortStatus', class: 'a-center flex1', sortProperty: 'contextStatus_statusCode'},
+    {title: 'Video count', property: 'videoCount', class: 'a-left flex1'},
+    {title: 'Subscribers', property: 'subscriberCount', class: 'a-left flex1'},
+    // TODO refactor the content alignment of a column so that it does not apply to a table header
+    {title: 'Status', property: 'shortStatus', class: 'a-left flex1 nowrap', sortProperty: 'contextStatus_statusCode'},
   ];
 
 }
