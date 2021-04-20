@@ -7,8 +7,7 @@ import {QuerySpec} from '../../core/model/query-spec.model';
 import {
   ColumnSpec,
   DEF_CHANNEL_LINK_BUILDER,
-  DEF_COMMENT_BI_LINK_BUILDER,
-  YT_VIDEO_LINK_BUILDER_STRATEGY
+  DEF_COMMENT_BI_LINK_BUILDER
 } from '../../core/table-connector/column-spec';
 import {catchError, finalize} from 'rxjs/operators';
 import {EMPTY} from 'rxjs';
@@ -32,7 +31,6 @@ export class VideoSummaryComponent implements OnInit {
 
   readonly videoId = this.route.snapshot.paramMap.get('videoId');
   summary?: VideoSummaryResponse;
-  link?: string;
 
   service = this.commentsService;
   staticQuery: QuerySpec = this.videoId ? {videoId: this.videoId} : {};
@@ -67,7 +65,6 @@ export class VideoSummaryComponent implements OnInit {
       ).subscribe(cs => {
         this.summary = cs;
         this.setHeaders(cs.video.title);
-        this.link = YT_VIDEO_LINK_BUILDER_STRATEGY(id);
       });
     }
   }

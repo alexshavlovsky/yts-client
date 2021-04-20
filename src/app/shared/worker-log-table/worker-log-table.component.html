@@ -1,0 +1,12 @@
+<table>
+  <tr>
+    <th>Timestamp</th>
+    <th>Status</th>
+    <th>Message</th>
+  </tr>
+  <tr *ngFor="let entry of log">
+    <td>{{entry.contextStatus.statusTimestamp|defDate}}</td>
+    <td>{{entry.contextStatus.statusCode}}</td>
+    <td>{{entry.contextStatus.statusMessage}}</td>
+  </tr>
+</table>

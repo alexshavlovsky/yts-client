@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ChannelsService} from '../../core/rest/channels.service';
 import {ChannelSummaryResponse} from '../../core/model/channel-response.model';
-import {ColumnSpec, DEF_VIDEO_LINK_BUILDER, YT_CHANNEL_LINK_BUILDER_STRATEGY} from '../../core/table-connector/column-spec';
+import {ColumnSpec, DEF_VIDEO_LINK_BUILDER} from '../../core/table-connector/column-spec';
 import {catchError, finalize} from 'rxjs/operators';
 import {EMPTY} from 'rxjs';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -28,7 +28,6 @@ export class ChannelSummaryComponent implements OnInit {
 
   readonly channelId = this.route.snapshot.paramMap.get('channelId');
   summary?: ChannelSummaryResponse;
-  link?: string;
 
   service = this.videosService;
   staticQuery: QuerySpec = this.channelId ? {channelId: this.channelId} : {};
@@ -70,7 +69,6 @@ export class ChannelSummaryComponent implements OnInit {
       ).subscribe(cs => {
         this.summary = cs;
         this.setHeaders(cs.channel.title);
-        this.link = YT_CHANNEL_LINK_BUILDER_STRATEGY(id);
       });
     }
   }

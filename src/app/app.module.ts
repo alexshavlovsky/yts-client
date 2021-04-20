@@ -16,6 +16,10 @@ import {AddChannelDialogComponent} from './shared/corner-menu/add-channel-dialog
 import {RichTableComponent} from './shared/rich-table/rich-table.component';
 import {ChannelSummaryComponent} from './features/channel-summary/channel-summary.component';
 import {VideoSummaryComponent} from './features/video-summary/video-summary.component';
+import {ChannelCardComponent} from './features/channel-summary/channel-card/channel-card.component';
+import {VideoCardComponent} from './features/video-summary/video-card/video-card.component';
+import {WorkerLogTableComponent} from './shared/worker-log-table/worker-log-table.component';
+import {CustomDatePipe} from './shared/pipe/custom-date.pipe';
 
 @NgModule({
   declarations: [
@@ -28,7 +32,11 @@ import {VideoSummaryComponent} from './features/video-summary/video-summary.comp
     AddChannelDialogComponent,
     RichTableComponent,
     ChannelSummaryComponent,
-    VideoSummaryComponent
+    VideoSummaryComponent,
+    ChannelCardComponent,
+    VideoCardComponent,
+    WorkerLogTableComponent,
+    CustomDatePipe
   ],
   imports: [
     BrowserModule,

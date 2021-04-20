@@ -18,98 +18,20 @@
   <div *ngIf="summary" class="content">
     <mat-tab-group>
       <mat-tab label="Summary">
-        <mat-card>
-          <mat-card-header>
-            <mat-card-title>{{summary.channel.title}}</mat-card-title>
-            <mat-card-subtitle>{{summary.channel.channelVanityName}}</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <table>
-              <tr>
-                <td><h4>Channel details</h4></td>
-              </tr>
-              <tr>
-                <td>Title</td>
-                <td>{{summary.channel.title}}</td>
-              </tr>
-              <tr>
-                <td>Youtube Id</td>
-                <td>{{summary.channel.channelId}}</td>
-              </tr>
-              <tr>
-                <td>Youtube vanity name</td>
-                <td>{{summary.channel.channelVanityName}}</td>
-              </tr>
-              <tr>
-                <td>Youtube link</td>
-                <td><a [href]="link">{{link}}</a></td>
-              </tr>
-              <tr>
-                <td>Subscriber count</td>
-                <td>{{summary.channel.subscriberCount}}</td>
-              </tr>
-              <tr>
-                <td>Video count</td>
-                <td>{{summary.channel.videoCount}}</td>
-              </tr>
-              <tr>
-                <td>Fetched video count</td>
-                <td>{{summary.channel.fetchedVideoCount}}</td>
-              </tr>
-              <tr>
-                <td>Comment count</td>
-                <td>{{summary.totalComments}}</td>
-              </tr>
-              <tr>
-                <td><h4>Internal timestamps</h4></td>
-              </tr>
-              <tr>
-                <td>Created</td>
-                <td>{{summary.channel.createdDate| date:'dd/MM/yyyy HH:mm:ss'}}</td>
-              </tr>
-              <tr>
-                <td>Updated</td>
-                <td>{{summary.channel.lastUpdatedDate| date:'dd/MM/yyyy HH:mm:ss'}}</td>
-              </tr>
-              <tr>
-                <td><h4>Internal status</h4></td>
-              </tr>
-              <tr>
-                <td>Short code</td>
-                <td>{{summary.channel.contextStatus.statusCode}}</td>
-              </tr>
-              <tr>
-                <td>Timestamp</td>
-                <td>{{summary.channel.contextStatus.statusTimestamp | date:'dd/MM/yyyy HH:mm:ss'}}</td>
-              </tr>
-              <tr>
-                <td>Message</td>
-                <td>{{summary.channel.contextStatus.statusMessage}}</td>
-              </tr>
-            </table>
-          </mat-card-content>
-        </mat-card>
+        <app-channel-card [summary]="summary">
+        </app-channel-card>
       </mat-tab>
       <mat-tab label="Videos">
-        <app-rich-table [columnsSpec]="columnsSpec"
-                        [tableTitle]="''"
-                        [service]="service"
-                        [standalone]="true"
-                        [staticQuery]="staticQuery"></app-rich-table>
+        <ng-template matTabContent>
+          <app-rich-table [columnsSpec]="columnsSpec"
+                          [tableTitle]="''"
+                          [service]="service"
+                          [standalone]="true"
+                          [staticQuery]="staticQuery"></app-rich-table>
+        </ng-template>
       </mat-tab>
       <mat-tab label="Log">
-        <table>
-          <tr>
-            <th>Timestamp</th>
-            <th>Status</th>
-            <th>Message</th>
-          </tr>
-          <tr *ngFor="let log of summary.log">
-            <td>{{log.contextStatus.statusTimestamp | date:'dd/MM/yyyy HH:mm:ss'}}</td>
-            <td>{{log.contextStatus.statusCode}}</td>
-            <td>{{log.contextStatus.statusMessage}}</td>
-          </tr>
-        </table>
+        <app-worker-log-table [log]="summary.log"></app-worker-log-table>
       </mat-tab>
       <mat-tab label="Operations">
         <table>
