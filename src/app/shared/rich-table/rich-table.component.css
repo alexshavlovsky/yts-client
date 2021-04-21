@@ -62,54 +62,6 @@ mat-form-field {
   width: 100%;
 }
 
-.a-center {
-  justify-content: center;
-  margin: 0 8px;
-}
-
-.a-left {
-  justify-content: flex-start;
-  margin: 0 8px;
-}
-
-.a-right {
-  justify-content: flex-end;
-  margin: 0 8px;
-}
-
-.flex1 {
-  flex: 1;
-}
-
-.flex2 {
-  flex: 2;
-}
-
-.flex4 {
-  flex: 4;
-}
-
-.flex8 {
-  flex: 8;
-}
-
-.nowrap {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-.spinner-container {
-  position: fixed;
-  display: flex;
-  height: inherit;
-  width: inherit;
-}
-
-.spinner-container mat-spinner {
-  margin: auto;
-}
-
 .mat-row,
 .mat-header-row {
   min-width: 600px;

@@ -7,6 +7,11 @@
     <table>
       <tr>
         <td><h4>Channel details</h4></td>
+        <td>
+          <button mat-icon-button color="primary" (click)="event.emit('refresh')">
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </td>
       </tr>
       <tr>
         <td>Title</td>

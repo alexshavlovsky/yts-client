@@ -1,6 +1,4 @@
-<div class="spinner-container" *ngIf="showSpinner">
-  <mat-spinner></mat-spinner>
-</div>
+<app-center-spinner [show]="showSpinner"></app-center-spinner>
 
 <div class="parent">
 
@@ -11,14 +9,14 @@
     <app-corner-menu></app-corner-menu>
   </div>
 
-  <div class="header">
+  <div class="header  nowrap">
     <div class="header-title">{{header}}</div>
   </div>
 
   <div *ngIf="summary" class="content">
     <mat-tab-group>
       <mat-tab label="Summary">
-        <app-channel-card [summary]="summary">
+        <app-channel-card [summary]="summary" (event)="channelCardEvent($event)">
         </app-channel-card>
       </mat-tab>
       <mat-tab label="Videos">

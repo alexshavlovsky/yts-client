@@ -1,0 +1,18 @@
+:host {
+  height: inherit;
+  width: inherit;
+  z-index: 999;
+}
+
+.spinner-container {
+  position: fixed;
+  display: flex;
+  height: inherit;
+  width: inherit;
+  z-index: inherit;
+}
+
+.spinner-container mat-spinner {
+  margin: auto;
+  z-index: inherit;
+}

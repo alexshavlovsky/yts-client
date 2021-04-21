@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {VideoSummaryResponse} from '../../../core/model/video-response.model';
 import {YT_VIDEO_LINK_BUILDER_STRATEGY} from '../../../core/table-connector/column-spec';
 
@@ -11,6 +11,7 @@ export class VideoCardComponent implements OnInit {
 
   @Input() summary!: VideoSummaryResponse;
   link?: string;
+  @Output() event: EventEmitter<string> = new EventEmitter();
 
   constructor() {
   }

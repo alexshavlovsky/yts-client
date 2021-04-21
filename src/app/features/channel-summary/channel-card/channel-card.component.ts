@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ChannelSummaryResponse} from '../../../core/model/channel-response.model';
 import {YT_CHANNEL_LINK_BUILDER_STRATEGY} from '../../../core/table-connector/column-spec';
 
@@ -10,6 +10,7 @@ import {YT_CHANNEL_LINK_BUILDER_STRATEGY} from '../../../core/table-connector/co
 export class ChannelCardComponent implements OnInit {
 
   @Input() summary!: ChannelSummaryResponse;
+  @Output() event: EventEmitter<string> = new EventEmitter();
   link?: string;
 
   constructor() {

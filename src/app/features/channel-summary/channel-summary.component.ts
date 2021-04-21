@@ -14,7 +14,7 @@ import {DEF_VIDEO_CTX_MENU_BUILDER} from '../../shared/rich-table/context-menu.d
 @Component({
   selector: 'app-channel-summary',
   templateUrl: './channel-summary.component.html',
-  styleUrls: ['./channel-summary.component.css']
+  styleUrls: ['./channel-summary.component.css', '../../shared/rich-table/rich-table.component.css']
 })
 export class ChannelSummaryComponent implements OnInit {
 
@@ -57,20 +57,7 @@ export class ChannelSummaryComponent implements OnInit {
 
   ngOnInit(): void {
     this.setHeaders('Channel summary');
-    if (this.channelId) {
-      const id = this.channelId;
-      this.showSpinner = true;
-      this.channelsService.getChannelSummary(id).pipe(
-        catchError(error => {
-          this.snackBar.open(error.message, 'close');
-          return EMPTY;
-        }),
-        finalize(() => this.showSpinner = false)
-      ).subscribe(cs => {
-        this.summary = cs;
-        this.setHeaders(cs.channel.title);
-      });
-    }
+    this.loadSummary();
   }
 
   deleteChannel(): void {
@@ -90,6 +77,29 @@ export class ChannelSummaryComponent implements OnInit {
       ).subscribe(response => {
         this.snackBar.open(`Channel ${response.channelId} deleted`, 'close');
         this.router.navigate(['/channels']);
+      });
+    }
+  }
+
+  channelCardEvent($event: string): void {
+    if ($event === 'refresh') {
+      this.loadSummary();
+    }
+  }
+
+  private loadSummary(): void {
+    if (this.channelId) {
+      const id = this.channelId;
+      this.showSpinner = true;
+      this.channelsService.getChannelSummary(id).pipe(
+        catchError(error => {
+          this.snackBar.open(error.message, 'close');
+          return EMPTY;
+        }),
+        finalize(() => this.showSpinner = false)
+      ).subscribe(cs => {
+        this.summary = cs;
+        this.setHeaders(cs.channel.title);
       });
     }
   }

@@ -20,6 +20,7 @@ import {ChannelCardComponent} from './features/channel-summary/channel-card/chan
 import {VideoCardComponent} from './features/video-summary/video-card/video-card.component';
 import {WorkerLogTableComponent} from './shared/worker-log-table/worker-log-table.component';
 import {CustomDatePipe} from './shared/pipe/custom-date.pipe';
+import { CenterSpinnerComponent } from './shared/center-spinner/center-spinner.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import {CustomDatePipe} from './shared/pipe/custom-date.pipe';
     ChannelCardComponent,
     VideoCardComponent,
     WorkerLogTableComponent,
-    CustomDatePipe
+    CustomDatePipe,
+    CenterSpinnerComponent
   ],
   imports: [
     BrowserModule,

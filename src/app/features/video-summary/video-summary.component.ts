@@ -17,7 +17,7 @@ import {CommentsService} from '../../core/rest/comments.service';
 @Component({
   selector: 'app-video-summary',
   templateUrl: './video-summary.component.html',
-  styleUrls: ['./video-summary.component.css']
+  styleUrls: ['./video-summary.component.css', '../../shared/rich-table/rich-table.component.css']
 })
 export class VideoSummaryComponent implements OnInit {
 
@@ -53,20 +53,7 @@ export class VideoSummaryComponent implements OnInit {
 
   ngOnInit(): void {
     this.setHeaders('Video summary');
-    if (this.videoId) {
-      const id = this.videoId;
-      this.showSpinner = true;
-      this.videosService.getVideoSummary(id).pipe(
-        catchError(error => {
-          this.snackBar.open(error.message, 'close');
-          return EMPTY;
-        }),
-        finalize(() => this.showSpinner = false)
-      ).subscribe(cs => {
-        this.summary = cs;
-        this.setHeaders(cs.video.title);
-      });
-    }
+    this.loadSummary();
   }
 
   deleteChannel(): void {
@@ -86,6 +73,29 @@ export class VideoSummaryComponent implements OnInit {
       ).subscribe(response => {
         this.snackBar.open(`Video ${response.videoId} deleted`, 'close');
         this.router.navigate(['/videos']);
+      });
+    }
+  }
+
+  videoCardEvent($event: string): void {
+    if ($event === 'refresh') {
+      this.loadSummary();
+    }
+  }
+
+  private loadSummary(): void {
+    if (this.videoId) {
+      const id = this.videoId;
+      this.showSpinner = true;
+      this.videosService.getVideoSummary(id).pipe(
+        catchError(error => {
+          this.snackBar.open(error.message, 'close');
+          return EMPTY;
+        }),
+        finalize(() => this.showSpinner = false)
+      ).subscribe(cs => {
+        this.summary = cs;
+        this.setHeaders(cs.video.title);
       });
     }
   }

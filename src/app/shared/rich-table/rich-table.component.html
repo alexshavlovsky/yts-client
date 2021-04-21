@@ -1,6 +1,4 @@
-<div class="spinner-container" *ngIf="dataSource.loading$ | async">
-  <mat-spinner></mat-spinner>
-</div>
+<app-center-spinner [show]="dataSource.loading$|async"></app-center-spinner>
 
 <mat-menu #contextMenu="matMenu">
   <ng-template matMenuContent let-items="items">
@@ -20,7 +18,7 @@
     <app-corner-menu></app-corner-menu>
   </div>
 
-  <div class="header" *ngIf="!isSearchOn">
+  <div class="header nowrap" *ngIf="!isSearchOn">
     <button mat-icon-button style="float: right" color="primary" (click)="isSearchOn=true">
       <mat-icon>search</mat-icon>
     </button>
