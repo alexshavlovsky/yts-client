@@ -4,15 +4,12 @@ import {VideosService} from '../../core/rest/videos.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Title} from '@angular/platform-browser';
 import {QuerySpec} from '../../core/model/query-spec.model';
-import {
-  ColumnSpec,
-  DEF_CHANNEL_LINK_BUILDER,
-  DEF_COMMENT_BI_LINK_BUILDER
-} from '../../core/table-connector/column-spec';
+import {ColumnSpec, DEF_CHANNEL_LINK_BUILDER, DEF_COMMENT_BI_LINK_BUILDER} from '../../core/table-connector/column-spec';
 import {catchError, finalize} from 'rxjs/operators';
 import {EMPTY} from 'rxjs';
 import {VideoSummaryResponse} from '../../core/model/video-response.model';
 import {CommentsService} from '../../core/rest/comments.service';
+import {DEF_USER_CTX_MENU_BUILDER} from '../../shared/rich-table/context-menu.data';
 
 @Component({
   selector: 'app-video-summary',
@@ -38,7 +35,10 @@ export class VideoSummaryComponent implements OnInit {
   deleteButtonDisabled = false;
 
   columnsSpec: ColumnSpec[] = [
-    {title: 'Author', property: 'authorText', class: 'a-left flex2', linkBuilder: DEF_CHANNEL_LINK_BUILDER},
+    {
+      title: 'Author', property: 'authorText', class: 'a-left flex2', linkBuilder: DEF_CHANNEL_LINK_BUILDER,
+      ctxMenuBuilder: DEF_USER_CTX_MENU_BUILDER
+    },
     {title: 'Comment', property: 'text', class: 'a-left flex8', biLinkBuilder: DEF_COMMENT_BI_LINK_BUILDER},
     {title: 'Likes', property: 'likeCount', class: 'a-right flex1'},
     {title: 'Published', property: 'publishedTimeText', class: 'a-right flex1', sortProperty: 'publishedDate'},

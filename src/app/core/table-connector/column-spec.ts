@@ -51,3 +51,9 @@ export const DEF_ROUTER_VIDEO_SUMMARY_LINK_BUILDER: LinkBuilder = {
   idKey: 'videoId',
   builder: ROUTER_VIDEO_SUMMARY_LINK_BUILDER_STRATEGY
 };
+
+export const ROUTER_USER_SUMMARY_LINK_BUILDER_STRATEGY: LinkBuilderStrategy = (id => '/users/' + id);
+export const DEF_ROUTER_USER_SUMMARY_LINK_BUILDER: LinkBuilder = {
+  idKey: 'channelId',
+  builder: ROUTER_USER_SUMMARY_LINK_BUILDER_STRATEGY
+};

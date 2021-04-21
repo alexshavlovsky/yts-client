@@ -21,6 +21,7 @@ import {VideoCardComponent} from './features/video-summary/video-card/video-card
 import {WorkerLogTableComponent} from './shared/worker-log-table/worker-log-table.component';
 import {CustomDatePipe} from './shared/pipe/custom-date.pipe';
 import { CenterSpinnerComponent } from './shared/center-spinner/center-spinner.component';
+import { UserSummaryComponent } from './features/user-summary/user-summary.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { CenterSpinnerComponent } from './shared/center-spinner/center-spinner.c
     VideoCardComponent,
     WorkerLogTableComponent,
     CustomDatePipe,
-    CenterSpinnerComponent
+    CenterSpinnerComponent,
+    UserSummaryComponent
   ],
   imports: [
     BrowserModule,

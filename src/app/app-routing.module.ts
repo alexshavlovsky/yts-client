@@ -5,9 +5,11 @@ import {ChannelsComponent} from './features/channels/channels.component';
 import {VideosComponent} from './features/videos/videos.component';
 import {ChannelSummaryComponent} from './features/channel-summary/channel-summary.component';
 import {VideoSummaryComponent} from './features/video-summary/video-summary.component';
+import {UserSummaryComponent} from './features/user-summary/user-summary.component';
 
 const routes: Routes = [
   {path: 'comments', component: CommentsComponent},
+  {path: 'users/:userId', component: UserSummaryComponent},
   {path: 'videos', component: VideosComponent},
   {path: 'videos/:videoId', component: VideoSummaryComponent},
   {path: 'channels', component: ChannelsComponent},
