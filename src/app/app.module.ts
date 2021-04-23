@@ -22,6 +22,7 @@ import {WorkerLogTableComponent} from './shared/worker-log-table/worker-log-tabl
 import {CustomDatePipe} from './shared/pipe/custom-date.pipe';
 import { CenterSpinnerComponent } from './shared/center-spinner/center-spinner.component';
 import { UserSummaryComponent } from './features/user-summary/user-summary.component';
+import { UsersComponent } from './features/users/users.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { UserSummaryComponent } from './features/user-summary/user-summary.compo
     WorkerLogTableComponent,
     CustomDatePipe,
     CenterSpinnerComponent,
-    UserSummaryComponent
+    UserSummaryComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,

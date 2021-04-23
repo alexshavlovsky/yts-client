@@ -13,6 +13,7 @@ export interface ChannelResponse {
 export interface ChannelDetailedResponse extends ChannelResponse {
   createdDate: Date;
   lastUpdatedDate: Date;
+  doneVideoCount: number;
   fetchedVideoCount: number;
   contextStatus: ContextStatusResponse;
 }
