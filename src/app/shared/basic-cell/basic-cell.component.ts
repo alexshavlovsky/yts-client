@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ColumnSpec} from '../../core/table-connector/column-spec';
 import {MatMenu} from '@angular/material/menu';
 import {ContextMenuData, ContextMenuItem, ContextMenuItemBuilder} from '../rich-table/context-menu.data';
+import {CustomDatePipe} from '../pipe/custom-date.pipe';
 
 @Component({
   selector: 'app-basic-cell',
@@ -21,7 +22,9 @@ export class BasicCellComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.text = this.spec.hideText ? '' : this.el[this.spec.property];
+    this.text = this.spec.hideText ? '' : this.spec.formatDate ?
+      new CustomDatePipe('en-US').transform(this.el[this.spec.property]) :
+      this.el[this.spec.property];
     if (this.spec.linkBuilder) {
       const lb = this.spec.linkBuilder;
       this.link = lb.builder(this.el[lb.idKey]);

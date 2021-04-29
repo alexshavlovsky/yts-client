@@ -1,7 +1,8 @@
 import {
+  DEF_AUTHOR_LINK_BUILDER,
   DEF_CHANNEL_LINK_BUILDER,
+  DEF_ROUTER_AUTHOR_SUMMARY_LINK_BUILDER,
   DEF_ROUTER_CHANNEL_SUMMARY_LINK_BUILDER,
-  DEF_ROUTER_USER_SUMMARY_LINK_BUILDER,
   DEF_ROUTER_VIDEO_SUMMARY_LINK_BUILDER,
   DEF_VIDEO_LINK_BUILDER,
   LinkBuilder
@@ -39,10 +40,16 @@ export const DEF_VIDEO_SHOW_SUMMARY_CTX_MENU_ITEM_BUILDER: ContextMenuItemBuilde
   linkBuilder: DEF_ROUTER_VIDEO_SUMMARY_LINK_BUILDER
 };
 
-export const DEF_USER_SHOW_SUMMARY_CTX_MENU_ITEM_BUILDER: ContextMenuItemBuilder = {
-  name: 'Show user summary',
+export const DEF_AUTHOR_SHOW_SUMMARY_CTX_MENU_ITEM_BUILDER: ContextMenuItemBuilder = {
+  name: 'Show author summary',
   icon: 'pageview',
-  linkBuilder: DEF_ROUTER_USER_SUMMARY_LINK_BUILDER
+  linkBuilder: DEF_ROUTER_AUTHOR_SUMMARY_LINK_BUILDER
+};
+
+export const DEF_AUTHOR_OPEN_ON_YOUTUBE_CTX_MENU_ITEM_BUILDER: ContextMenuItemBuilder = {
+  name: 'Open channel on Youtube',
+  icon: 'open_in_browser',
+  linkBuilder: DEF_AUTHOR_LINK_BUILDER
 };
 
 export const DEF_CHANNEL_OPEN_ON_YOUTUBE_CTX_MENU_ITEM_BUILDER: ContextMenuItemBuilder = {
@@ -71,9 +78,10 @@ export const DEF_VIDEO_CTX_MENU_BUILDER: ContextMenuBuilder = {
   ]
 };
 
-export const DEF_USER_CTX_MENU_BUILDER: ContextMenuBuilder = {
+export const DEF_AUTHOR_CTX_MENU_BUILDER: ContextMenuBuilder = {
   itemBuilders: [
-    DEF_USER_SHOW_SUMMARY_CTX_MENU_ITEM_BUILDER,
-    DEF_CHANNEL_OPEN_ON_YOUTUBE_CTX_MENU_ITEM_BUILDER
+    DEF_AUTHOR_SHOW_SUMMARY_CTX_MENU_ITEM_BUILDER,
+    DEF_AUTHOR_OPEN_ON_YOUTUBE_CTX_MENU_ITEM_BUILDER
   ]
 };
+

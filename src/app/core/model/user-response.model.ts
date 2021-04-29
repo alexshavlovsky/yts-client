@@ -1,8 +1,10 @@
 export interface UserResponse {
-  userId: string;
-  userTitle: string;
+  authorChannelId: string;
+  authorText: string;
   commentedVideoCount: number;
   commentCount: number;
   likeCount: number;
   replyCount: number;
+  firstSeen: Date;
+  lastSeen: Date;
 }
