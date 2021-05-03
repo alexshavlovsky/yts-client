@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {ColumnSpec, DEF_CHANNEL_LINK_BUILDER, DEF_VIDEO_LINK_BUILDER} from '../../core/table-connector/column-spec';
+import {ColumnSpec} from '../../core/preset/column-spec';
 import {VideosService} from '../../core/rest/videos.service';
-import {DEF_CHANNEL_CTX_MENU_BUILDER, DEF_VIDEO_CTX_MENU_BUILDER} from '../../shared/rich-table/context-menu.data';
+import {VIDEO_TABLE_PRESET} from '../../core/preset/rich-table.presets';
 
 @Component({
   selector: 'app-videos',
@@ -17,23 +17,6 @@ export class VideosComponent {
 
   service = this.videosService;
 
-  columnsSpec: ColumnSpec[] = [
-    {
-      title: 'Channel',
-      property: 'channelTitle',
-      class: 'a-left flex2 nowrap',
-      linkBuilder: DEF_CHANNEL_LINK_BUILDER,
-      sortProperty: 'channel',
-      ctxMenuBuilder: DEF_CHANNEL_CTX_MENU_BUILDER
-    },
-    {
-      title: 'Title', property: 'title', class: 'a-left flex4', linkBuilder: DEF_VIDEO_LINK_BUILDER,
-      ctxMenuBuilder: DEF_VIDEO_CTX_MENU_BUILDER
-    },
-    {title: 'Published', property: 'publishedTimeText', class: 'a-left flex1 nowrap', sortProperty: 'publishedDate'},
-    {title: 'View count', property: 'viewCountText', class: 'a-left flex1'},
-    {title: 'Comment count', property: 'totalCommentCount', class: 'a-left flex1'},
-    {title: 'Status', property: 'shortStatus', class: 'a-left flex1 nowrap', sortProperty: 'contextStatus_statusCode'},
-  ];
+  columnsSpec: ColumnSpec[] = VIDEO_TABLE_PRESET;
 
 }

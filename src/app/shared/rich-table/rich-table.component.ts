@@ -1,5 +1,5 @@
 import {AfterContentInit, Component, ElementRef, Input, OnDestroy, ViewChild} from '@angular/core';
-import {ColumnSpec} from '../../core/table-connector/column-spec';
+import {ColumnSpec} from '../../core/preset/column-spec';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatTableConnectorService} from '../../core/table-connector/mat-table-connector.service';
 import {GenericPagedDataSource} from '../../core/table-connector/generic-paged-data-source';

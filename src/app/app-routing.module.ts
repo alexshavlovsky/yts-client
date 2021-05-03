@@ -16,7 +16,7 @@ const routes: Routes = [
   {path: 'videos/:videoId', component: VideoSummaryComponent},
   {path: 'channels', component: ChannelsComponent},
   {path: 'channels/:channelId', component: ChannelSummaryComponent},
-  {path: '', pathMatch: 'full', redirectTo: 'comments'},
+  {path: '', pathMatch: 'full', redirectTo: 'channels'},
 ];
 
 @NgModule({

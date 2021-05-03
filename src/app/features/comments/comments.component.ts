@@ -1,12 +1,7 @@
 import {Component} from '@angular/core';
 import {CommentsService} from '../../core/rest/comments.service';
-import {
-  ColumnSpec,
-  DEF_AUTHOR_LINK_BUILDER,
-  DEF_COMMENT_BI_LINK_BUILDER,
-  DEF_VIDEO_LINK_BUILDER
-} from '../../core/table-connector/column-spec';
-import {DEF_AUTHOR_CTX_MENU_BUILDER, DEF_VIDEO_CTX_MENU_BUILDER} from '../../shared/rich-table/context-menu.data';
+import {ColumnSpec} from '../../core/preset/column-spec';
+import {COMMENT_TABLE_PRESET} from '../../core/preset/rich-table.presets';
 
 @Component({
   selector: 'app-comments',
@@ -22,22 +17,6 @@ export class CommentsComponent {
 
   service = this.commentService;
 
-  columnsSpec: ColumnSpec[] = [
-    {
-      title: 'Video',
-      property: 'videoTitle',
-      class: 'a-left flex2 nowrap',
-      linkBuilder: DEF_VIDEO_LINK_BUILDER,
-      sortProperty: 'video',
-      ctxMenuBuilder: DEF_VIDEO_CTX_MENU_BUILDER
-    },
-    {
-      title: 'Author', property: 'authorText', class: 'a-left flex2', linkBuilder: DEF_AUTHOR_LINK_BUILDER,
-      ctxMenuBuilder: DEF_AUTHOR_CTX_MENU_BUILDER
-    },
-    {title: 'Comment', property: 'text', class: 'a-left flex8', biLinkBuilder: DEF_COMMENT_BI_LINK_BUILDER},
-    {title: 'Likes', property: 'likeCount', class: 'a-left flex1'},
-    {title: 'Published', property: 'publishedTimeText', class: 'a-left flex1 nowrap', sortProperty: 'publishedDate'},
-  ];
+  columnsSpec: ColumnSpec[] = COMMENT_TABLE_PRESET;
 
 }

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {VideoSummaryResponse} from '../../../core/model/video-response.model';
-import {YT_VIDEO_LINK_BUILDER_STRATEGY} from '../../../core/table-connector/column-spec';
+import {YT_VIDEO_LINK_BUILDER_STRATEGY} from '../../../core/preset/link-builder.presets';
 
 @Component({
   selector: 'app-video-card',

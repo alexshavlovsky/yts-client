@@ -4,29 +4,9 @@ import {
   DEF_ROUTER_AUTHOR_SUMMARY_LINK_BUILDER,
   DEF_ROUTER_CHANNEL_SUMMARY_LINK_BUILDER,
   DEF_ROUTER_VIDEO_SUMMARY_LINK_BUILDER,
-  DEF_VIDEO_LINK_BUILDER,
-  LinkBuilder
-} from '../../core/table-connector/column-spec';
-
-export interface ContextMenuItem {
-  name: string;
-  icon: string;
-  link: string;
-}
-
-export interface ContextMenuData {
-  items: ContextMenuItem[];
-}
-
-export interface ContextMenuItemBuilder {
-  name: string;
-  icon: string;
-  linkBuilder: LinkBuilder;
-}
-
-export interface ContextMenuBuilder {
-  itemBuilders: ContextMenuItemBuilder[];
-}
+  DEF_VIDEO_LINK_BUILDER
+} from './link-builder.presets';
+import {ContextMenuBuilder, ContextMenuItemBuilder} from './column-spec';
 
 export const DEF_CHANNEL_SHOW_SUMMARY_CTX_MENU_ITEM_BUILDER: ContextMenuItemBuilder = {
   name: 'Show channel summary',
@@ -84,4 +64,3 @@ export const DEF_AUTHOR_CTX_MENU_BUILDER: ContextMenuBuilder = {
     DEF_AUTHOR_OPEN_ON_YOUTUBE_CTX_MENU_ITEM_BUILDER
   ]
 };
-

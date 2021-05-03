@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ChannelSummaryResponse} from '../../../core/model/channel-response.model';
-import {YT_CHANNEL_LINK_BUILDER_STRATEGY} from '../../../core/table-connector/column-spec';
+import {YT_CHANNEL_LINK_BUILDER_STRATEGY} from '../../../core/preset/link-builder.presets';
 
 @Component({
   selector: 'app-channel-card',

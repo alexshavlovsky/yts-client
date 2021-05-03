@@ -2,14 +2,14 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ChannelsService} from '../../core/rest/channels.service';
 import {ChannelSummaryResponse} from '../../core/model/channel-response.model';
-import {ColumnSpec, DEF_VIDEO_LINK_BUILDER} from '../../core/table-connector/column-spec';
+import {ColumnSpec} from '../../core/preset/column-spec';
 import {catchError, finalize} from 'rxjs/operators';
 import {EMPTY} from 'rxjs';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Title} from '@angular/platform-browser';
 import {VideosService} from '../../core/rest/videos.service';
 import {QuerySpec} from '../../core/model/query-spec.model';
-import {DEF_VIDEO_CTX_MENU_BUILDER} from '../../shared/rich-table/context-menu.data';
+import {CHANNEL_VIDEOS_TABLE_PRESET} from '../../core/preset/rich-table.presets';
 
 @Component({
   selector: 'app-channel-summary',
@@ -34,19 +34,7 @@ export class ChannelSummaryComponent implements OnInit {
   header = '';
   deleteButtonDisabled = false;
 
-  columnsSpec: ColumnSpec[] = [
-    {
-      title: 'Title',
-      property: 'title',
-      class: 'a-left flex4',
-      linkBuilder: DEF_VIDEO_LINK_BUILDER,
-      ctxMenuBuilder: DEF_VIDEO_CTX_MENU_BUILDER
-    },
-    {title: 'Published', property: 'publishedTimeText', class: 'a-right flex1', sortProperty: 'publishedDate'},
-    {title: 'View count', property: 'viewCountText', class: 'a-right flex1'},
-    {title: 'Comment count', property: 'totalCommentCount', class: 'a-right flex1'},
-    {title: 'Status', property: 'shortStatus', class: 'a-center flex1', sortProperty: 'contextStatus_statusCode'},
-  ];
+  columnsSpec: ColumnSpec[] = CHANNEL_VIDEOS_TABLE_PRESET;
 
   showSpinner = false;
 
