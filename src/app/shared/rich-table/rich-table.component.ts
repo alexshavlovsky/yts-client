@@ -5,10 +5,14 @@ import {MatTableConnectorService} from '../../core/table-connector/mat-table-con
 import {GenericPagedDataSource} from '../../core/table-connector/generic-paged-data-source';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {Subscription} from 'rxjs';
+import {EMPTY, Subscription} from 'rxjs';
 import {AbstractPagedService} from '../../core/rest/abstact-paged.service';
 import {Title} from '@angular/platform-browser';
 import {QuerySpec} from '../../core/model/query-spec.model';
+import {ContextMenuAction} from '../../core/preset/context-menu';
+import {Router} from '@angular/router';
+import {ChannelsService} from '../../core/rest/channels.service';
+import {catchError} from 'rxjs/operators';
 
 @Component({
   selector: 'app-rich-table',
@@ -18,7 +22,9 @@ import {QuerySpec} from '../../core/model/query-spec.model';
 export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
 
   constructor(private snackBar: MatSnackBar,
+              private router: Router,
               private matTableAdapterService: MatTableConnectorService<T>,
+              private channelsService: ChannelsService,
               private titleService: Title) {
   }
 
@@ -58,6 +64,39 @@ export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
     this.isSearchOn = false;
     this.input.nativeElement.value = '';
     this.input.nativeElement.dispatchEvent(new Event('input'));
+  }
+
+  ctxMenuAction(action: ContextMenuAction): void {
+    switch (action.type) {
+      case 'ROUTE':
+        this.navigate(action.payload);
+        break;
+      case 'UPDATE_CHANNEL':
+        this.updateChannel(action.payload);
+        break;
+      default:
+        console.warn('Unsupported ctx-menu action', action);
+    }
+  }
+
+  private updateChannel(channelId: string): void {
+    this.channelsService.updateChannel({channelId}).pipe(
+      catchError(error => {
+        this.snackBar.open(error.message, 'close');
+        return EMPTY;
+      })
+    ).subscribe(response => {
+      this.snackBar.open(`Channel ${response.channelId} scheduled for update`, 'close');
+      this.router.navigate(['/channels', response.channelId]);
+    });
+  }
+
+  private navigate(url: string): void {
+    if (url.startsWith('/')) {
+      this.router.navigate([url]);
+    } else {
+      window.open(url, '_blank');
+    }
   }
 
 }

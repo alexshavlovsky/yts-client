@@ -26,6 +26,10 @@ export class ChannelsService extends AbstractPagedService<ChannelResponse> {
     return this.http.post<ChannelIdModel>('/api/channels', payload, {headers: AbstractPagedService.CONTENT_JSON_ACCEPT_JSON});
   }
 
+  updateChannel(payload: ChannelIdModel): Observable<ChannelIdModel> {
+    return this.http.put<ChannelIdModel>('/api/channels', payload, {headers: AbstractPagedService.CONTENT_JSON_ACCEPT_JSON});
+  }
+
   getChannelSummary(id: string): Observable<ChannelSummaryResponse> {
     return this.http.get<ChannelSummaryResponse>('/api/channels/' + id, {headers: AbstractPagedService.CONTENT_JSON_ACCEPT_JSON});
   }

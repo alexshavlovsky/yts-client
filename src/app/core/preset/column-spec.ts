@@ -1,3 +1,17 @@
+import {ContextMenuAction} from './context-menu';
+
+export type ActionBuilderStrategy = (entity: any) => ContextMenuAction;
+
+export interface ContextMenuItemBuilder {
+  name: string;
+  icon: string;
+  actionBuilderStrategy: ActionBuilderStrategy;
+}
+
+export interface ContextMenuBuilder {
+  itemBuilders: ContextMenuItemBuilder[];
+}
+
 export type LinkBuilderStrategy = (id: string) => string;
 
 export type BiLinkBuilderStrategy = (id1: string, id2: string) => string;
@@ -11,26 +25,6 @@ export interface BiLinkBuilder {
   idKey1: string;
   idKey2: string;
   builder: BiLinkBuilderStrategy;
-}
-
-export interface ContextMenuItem {
-  name: string;
-  icon: string;
-  link: string;
-}
-
-export interface ContextMenu {
-  items: ContextMenuItem[];
-}
-
-export interface ContextMenuItemBuilder {
-  name: string;
-  icon: string;
-  linkBuilder: LinkBuilder;
-}
-
-export interface ContextMenuBuilder {
-  itemBuilders: ContextMenuItemBuilder[];
 }
 
 export interface ColumnSpec {

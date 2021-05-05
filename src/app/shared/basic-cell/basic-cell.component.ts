@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ColumnSpec, ContextMenu, ContextMenuItem, ContextMenuItemBuilder} from '../../core/preset/column-spec';
+import {ColumnSpec, ContextMenuItemBuilder} from '../../core/preset/column-spec';
 import {MatMenu} from '@angular/material/menu';
 import {DatePipe} from '@angular/common';
+import {ContextMenu, ContextMenuItem} from '../../core/preset/context-menu';
 
 @Component({
   selector: 'app-basic-cell',
@@ -38,7 +39,7 @@ export class BasicCellComponent implements OnInit {
         items: builders.map((builder: ContextMenuItemBuilder): ContextMenuItem => ({
           name: builder.name,
           icon: builder.icon,
-          link: builder.linkBuilder.builder(this.el[builder.linkBuilder.idKey])
+          action: builder.actionBuilderStrategy(this.el)
         }))
       };
     }
