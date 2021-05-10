@@ -29,6 +29,10 @@ export class VideosService extends AbstractPagedService<VideoResponse> {
     return this.http.get<VideoSummaryResponse>('/api/videos/' + id, {headers: AbstractPagedService.CONTENT_JSON_ACCEPT_JSON});
   }
 
+  updateVideo(payload: VideoIdModel): Observable<VideoIdModel> {
+    return this.http.put<VideoIdModel>('/api/videos', payload, {headers: AbstractPagedService.CONTENT_JSON_ACCEPT_JSON});
+  }
+
   deleteById(id: string): Observable<VideoIdModel> {
     return this.http.delete<VideoIdModel>('/api/videos/' + id, {headers: AbstractPagedService.CONTENT_JSON_ACCEPT_JSON});
   }

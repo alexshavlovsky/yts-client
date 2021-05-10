@@ -13,6 +13,7 @@ import {ContextMenuAction} from '../../core/preset/context-menu';
 import {Router} from '@angular/router';
 import {ChannelsService} from '../../core/rest/channels.service';
 import {catchError} from 'rxjs/operators';
+import {VideosService} from '../../core/rest/videos.service';
 
 @Component({
   selector: 'app-rich-table',
@@ -25,6 +26,7 @@ export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
               private router: Router,
               private matTableAdapterService: MatTableConnectorService<T>,
               private channelsService: ChannelsService,
+              private videosService: VideosService,
               private titleService: Title) {
   }
 
@@ -74,6 +76,9 @@ export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
       case 'UPDATE_CHANNEL':
         this.updateChannel(action.payload);
         break;
+      case 'UPDATE_VIDEO':
+        this.updateVideo(action.payload);
+        break;
       default:
         console.warn('Unsupported ctx-menu action', action);
     }
@@ -88,6 +93,18 @@ export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
     ).subscribe(response => {
       this.snackBar.open(`Channel ${response.channelId} scheduled for update`, 'close');
       this.router.navigate(['/channels', response.channelId]);
+    });
+  }
+
+  private updateVideo(videoId: string): void {
+    this.videosService.updateVideo({videoId}).pipe(
+      catchError(error => {
+        this.snackBar.open(error.message, 'close');
+        return EMPTY;
+      })
+    ).subscribe(response => {
+      this.snackBar.open(`Video ${response.videoId} scheduled for update`, 'close');
+//      this.router.navigate(['/videos', response.videoId]);
     });
   }
 
