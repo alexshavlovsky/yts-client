@@ -23,7 +23,7 @@ export class GenericPagedDataSource<T> implements DataSource<T> {
   protected dataSubject = new BehaviorSubject<T[]>([]);
   protected contextSubject = new BehaviorSubject<PagedResponse<T>>(GenericPagedDataSource.EMPTY_PAGE);
   protected loadingSubject = new BehaviorSubject<boolean>(false);
-  protected errorSubject = new Subject<string>();
+  protected errorSubject = new Subject<any>();
   public loading$ = this.loadingSubject.asObservable();
   public context$ = this.contextSubject.asObservable();
   public error$ = this.errorSubject.asObservable();
@@ -45,7 +45,7 @@ export class GenericPagedDataSource<T> implements DataSource<T> {
     this.loadingSubject.next(true);
     this.pagedService.find(pageableRequest, query).pipe(
       catchError(error => {
-        this.errorSubject.next(error.message);
+        this.errorSubject.next(error);
         return of(GenericPagedDataSource.EMPTY_PAGE);
       }),
       finalize(() => this.loadingSubject.next(false))

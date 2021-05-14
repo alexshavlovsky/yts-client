@@ -7,6 +7,7 @@ import {AbstractPagedService} from './abstact-paged.service';
 import {VideoResponse, VideoSummaryResponse} from '../model/video-response.model';
 import {QuerySpec} from '../model/query-spec.model';
 import {VideoIdModel} from '../model/video-id-model';
+import {ReadableResponse} from '../model/readable-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,12 +30,12 @@ export class VideosService extends AbstractPagedService<VideoResponse> {
     return this.http.get<VideoSummaryResponse>('/api/videos/' + id, {headers: AbstractPagedService.CONTENT_JSON_ACCEPT_JSON});
   }
 
-  updateVideo(payload: VideoIdModel): Observable<VideoIdModel> {
-    return this.http.put<VideoIdModel>('/api/videos', payload, {headers: AbstractPagedService.CONTENT_JSON_ACCEPT_JSON});
+  updateVideo(payload: VideoIdModel): Observable<ReadableResponse> {
+    return this.http.put<ReadableResponse>('/api/videos', payload, {headers: AbstractPagedService.CONTENT_JSON_ACCEPT_JSON});
   }
 
-  deleteById(id: string): Observable<VideoIdModel> {
-    return this.http.delete<VideoIdModel>('/api/videos/' + id, {headers: AbstractPagedService.CONTENT_JSON_ACCEPT_JSON});
+  deleteById(id: string): Observable<ReadableResponse> {
+    return this.http.delete<ReadableResponse>('/api/videos/' + id, {headers: AbstractPagedService.CONTENT_JSON_ACCEPT_JSON});
   }
 
 }

@@ -7,12 +7,11 @@ import {
   ChannelDialogPayload
 } from './add-channel-dialog/add-channel-dialog.component';
 import {catchError, filter, map} from 'rxjs/operators';
-
-import {EMPTY} from 'rxjs';
-import {MatSnackBar} from '@angular/material/snack-bar';
 import {flatMap} from 'rxjs/internal/operators';
 import {ChannelsService} from '../../core/rest/channels.service';
 import {Router} from '@angular/router';
+import {SnackBarService} from '../../core/snack-bar.service';
+
 
 @Component({
   selector: 'app-corner-menu',
@@ -26,7 +25,7 @@ export class CornerMenuComponent implements OnInit {
   constructor(private dialog: MatDialog,
               private router: Router,
               private channelsService: ChannelsService,
-              private snackBar: MatSnackBar) {
+              private snackBarService: SnackBarService) {
   }
 
   ngOnInit(): void {
@@ -44,13 +43,10 @@ export class CornerMenuComponent implements OnInit {
       filter((payload: ChannelDialogPayload) => payload !== undefined),
       map(payload => ({channelId: payload.newChannelId})),
       flatMap(request => this.channelsService.addChannel(request)),
-      catchError(error => {
-        this.snackBar.open(error.message, 'close');
-        return EMPTY;
-      })
+      catchError(err => this.snackBarService.showHttpError(err))
     ).subscribe(response => {
-      this.snackBar.open(`Channel ${response.channelId} scheduled`, 'close');
-      this.router.navigate(['/channels', response.channelId]);
+      this.snackBarService.showMessage(response.message);
+      this.router.navigate(['/channels', response.entityId]);
     });
   }
 

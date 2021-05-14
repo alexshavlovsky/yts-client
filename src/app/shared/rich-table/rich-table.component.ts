@@ -1,11 +1,10 @@
 import {AfterContentInit, Component, ElementRef, Input, OnDestroy, ViewChild} from '@angular/core';
 import {ColumnSpec} from '../../core/preset/column-spec';
-import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatTableConnectorService} from '../../core/table-connector/mat-table-connector.service';
 import {GenericPagedDataSource} from '../../core/table-connector/generic-paged-data-source';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {EMPTY, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {AbstractPagedService} from '../../core/rest/abstact-paged.service';
 import {Title} from '@angular/platform-browser';
 import {QuerySpec} from '../../core/model/query-spec.model';
@@ -14,6 +13,7 @@ import {Router} from '@angular/router';
 import {ChannelsService} from '../../core/rest/channels.service';
 import {catchError} from 'rxjs/operators';
 import {VideosService} from '../../core/rest/videos.service';
+import {SnackBarService} from '../../core/snack-bar.service';
 
 @Component({
   selector: 'app-rich-table',
@@ -22,7 +22,7 @@ import {VideosService} from '../../core/rest/videos.service';
 })
 export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
 
-  constructor(private snackBar: MatSnackBar,
+  constructor(private snackBarService: SnackBarService,
               private router: Router,
               private matTableAdapterService: MatTableConnectorService<T>,
               private channelsService: ChannelsService,
@@ -55,7 +55,7 @@ export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
     this.dataSource = new GenericPagedDataSource<T>(this.service);
     this.sub.add(this.matTableAdapterService
       .connect(this.paginator, this.sort, this.input, this.dataSource, this.staticQuery ? this.staticQuery : {}).subscribe());
-    this.sub.add(this.dataSource.error$.subscribe(message => this.snackBar.open(message, 'close')));
+    this.sub.add(this.dataSource.error$.subscribe(error => this.snackBarService.showHttpError(error)));
   }
 
   ngOnDestroy(): void {
@@ -86,24 +86,18 @@ export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
 
   private updateChannel(channelId: string): void {
     this.channelsService.updateChannel({channelId}).pipe(
-      catchError(error => {
-        this.snackBar.open(error.message, 'close');
-        return EMPTY;
-      })
+      catchError(err => this.snackBarService.showHttpError(err))
     ).subscribe(response => {
-      this.snackBar.open(`Channel ${response.channelId} scheduled for update`, 'close');
-      this.router.navigate(['/channels', response.channelId]);
+      this.snackBarService.showMessage(response.message);
+      this.router.navigate(['/channels', response.entityId]);
     });
   }
 
   private updateVideo(videoId: string): void {
     this.videosService.updateVideo({videoId}).pipe(
-      catchError(error => {
-        this.snackBar.open(error.message, 'close');
-        return EMPTY;
-      })
+      catchError(err => this.snackBarService.showHttpError(err))
     ).subscribe(response => {
-      this.snackBar.open(`Video ${response.videoId} scheduled for update`, 'close');
+      this.snackBarService.showMessage(response.message);
 //      this.router.navigate(['/videos', response.videoId]);
     });
   }

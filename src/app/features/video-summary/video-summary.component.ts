@@ -1,15 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {VideosService} from '../../core/rest/videos.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
 import {Title} from '@angular/platform-browser';
 import {QuerySpec} from '../../core/model/query-spec.model';
 import {ColumnSpec} from '../../core/preset/column-spec';
 import {catchError, finalize} from 'rxjs/operators';
-import {EMPTY} from 'rxjs';
 import {VideoSummaryResponse} from '../../core/model/video-response.model';
 import {CommentsService} from '../../core/rest/comments.service';
 import {VIDEO_COMMENTS_TABLE_PRESET} from '../../core/preset/rich-table.presets';
+import {SnackBarService} from '../../core/snack-bar.service';
 
 @Component({
   selector: 'app-video-summary',
@@ -22,7 +21,7 @@ export class VideoSummaryComponent implements OnInit {
               private router: Router,
               private videosService: VideosService,
               private commentsService: CommentsService,
-              private snackBar: MatSnackBar,
+              private snackBarService: SnackBarService,
               private titleService: Title) {
   }
 
@@ -54,16 +53,13 @@ export class VideoSummaryComponent implements OnInit {
       this.deleteButtonDisabled = true;
       this.showSpinner = true;
       this.videosService.deleteById(id).pipe(
-        catchError(error => {
-          this.snackBar.open(error.message, 'close');
-          return EMPTY;
-        }),
+        catchError(err => this.snackBarService.showHttpError(err)),
         finalize(() => {
           this.deleteButtonDisabled = false;
           this.showSpinner = false;
         })
       ).subscribe(response => {
-        this.snackBar.open(`Video ${response.videoId} deleted`, 'close');
+        this.snackBarService.showMessage(response.message);
         this.router.navigate(['/videos']);
       });
     }
@@ -80,10 +76,7 @@ export class VideoSummaryComponent implements OnInit {
       const id = this.videoId;
       this.showSpinner = true;
       this.videosService.getVideoSummary(id).pipe(
-        catchError(error => {
-          this.snackBar.open(error.message, 'close');
-          return EMPTY;
-        }),
+        catchError(err => this.snackBarService.showHttpError(err)),
         finalize(() => this.showSpinner = false)
       ).subscribe(cs => {
         this.summary = cs;

@@ -4,12 +4,11 @@ import {ChannelsService} from '../../core/rest/channels.service';
 import {ChannelSummaryResponse} from '../../core/model/channel-response.model';
 import {ColumnSpec} from '../../core/preset/column-spec';
 import {catchError, finalize} from 'rxjs/operators';
-import {EMPTY} from 'rxjs';
-import {MatSnackBar} from '@angular/material/snack-bar';
 import {Title} from '@angular/platform-browser';
 import {VideosService} from '../../core/rest/videos.service';
 import {QuerySpec} from '../../core/model/query-spec.model';
 import {CHANNEL_VIDEOS_TABLE_PRESET} from '../../core/preset/rich-table.presets';
+import {SnackBarService} from '../../core/snack-bar.service';
 
 @Component({
   selector: 'app-channel-summary',
@@ -22,7 +21,7 @@ export class ChannelSummaryComponent implements OnInit {
               private router: Router,
               private channelsService: ChannelsService,
               private videosService: VideosService,
-              private snackBar: MatSnackBar,
+              private snackBarService: SnackBarService,
               private titleService: Title) {
   }
 
@@ -54,16 +53,13 @@ export class ChannelSummaryComponent implements OnInit {
       this.deleteButtonDisabled = true;
       this.showSpinner = true;
       this.channelsService.deleteById(id).pipe(
-        catchError(error => {
-          this.snackBar.open(error.message, 'close');
-          return EMPTY;
-        }),
+        catchError(err => this.snackBarService.showHttpError(err)),
         finalize(() => {
           this.deleteButtonDisabled = false;
           this.showSpinner = false;
         })
       ).subscribe(response => {
-        this.snackBar.open(`Channel ${response.channelId} deleted`, 'close');
+        this.snackBarService.showMessage(response.message);
         this.router.navigate(['/channels']);
       });
     }
@@ -80,10 +76,7 @@ export class ChannelSummaryComponent implements OnInit {
       const id = this.channelId;
       this.showSpinner = true;
       this.channelsService.getChannelSummary(id).pipe(
-        catchError(error => {
-          this.snackBar.open(error.message, 'close');
-          return EMPTY;
-        }),
+        catchError(err => this.snackBarService.showHttpError(err)),
         finalize(() => this.showSpinner = false)
       ).subscribe(cs => {
         this.summary = cs;
