@@ -1,10 +1,22 @@
-export interface UserResponse {
+import {ChannelResponse} from './channel-response.model';
+import {VideoResponse} from './video-response.model';
+
+export interface UserBase {
   authorChannelId: string;
   authorText: string;
-  commentedVideoCount: number;
   commentCount: number;
   likeCount: number;
   replyCount: number;
   firstSeen: Date;
   lastSeen: Date;
+}
+
+export interface UserResponse extends UserBase {
+  commentedVideoCount: number;
+}
+
+export interface UserSummaryResponse extends UserBase {
+  knownNames: string[];
+  commentedChannels: ChannelResponse[];
+  commentedVideos: VideoResponse[];
 }

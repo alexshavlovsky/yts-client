@@ -40,8 +40,13 @@ export const DEF_VIDEO_UPDATE_CTX_MENU_ITEM_BUILDER: ContextMenuItemBuilder = {
 
 export const DEF_AUTHOR_SHOW_SUMMARY_CTX_MENU_ITEM_BUILDER: ContextMenuItemBuilder = {
   name: 'Show author summary',
-  icon: 'pageview',
+  icon: 'person_search',
   actionBuilderStrategy: adaptLinkToActionBuilder(DEF_ROUTER_AUTHOR_SUMMARY_LINK_BUILDER)
+};
+
+export const DEF_CHANNEL_AS_AUTHOR_SHOW_SUMMARY_CTX_MENU_ITEM_BUILDER: ContextMenuItemBuilder = {
+  ...DEF_AUTHOR_SHOW_SUMMARY_CTX_MENU_ITEM_BUILDER,
+  actionBuilderStrategy: adaptLinkToActionBuilder({...DEF_ROUTER_AUTHOR_SUMMARY_LINK_BUILDER, idKey: 'channelId'})
 };
 
 export const DEF_AUTHOR_OPEN_ON_YOUTUBE_CTX_MENU_ITEM_BUILDER: ContextMenuItemBuilder = {
@@ -66,7 +71,8 @@ export const DEF_CHANNEL_CTX_MENU_BUILDER: ContextMenuBuilder = {
   itemBuilders: [
     DEF_CHANNEL_SHOW_SUMMARY_CTX_MENU_ITEM_BUILDER,
     DEF_CHANNEL_OPEN_ON_YOUTUBE_CTX_MENU_ITEM_BUILDER,
-    DEF_CHANNEL_UPDATE_CTX_MENU_ITEM_BUILDER
+    DEF_CHANNEL_UPDATE_CTX_MENU_ITEM_BUILDER,
+    DEF_CHANNEL_AS_AUTHOR_SHOW_SUMMARY_CTX_MENU_ITEM_BUILDER
   ]
 };
 

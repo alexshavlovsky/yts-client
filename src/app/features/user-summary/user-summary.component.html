@@ -1,1 +1,36 @@
-<p>{{userId}}</p>
+<app-center-spinner [show]="showSpinner"></app-center-spinner>
+
+<div class="parent">
+
+  <div class="shadow-container">
+  </div>
+
+  <div class="corner-menu">
+    <app-corner-menu></app-corner-menu>
+  </div>
+
+  <div class="header nowrap">
+    <div class="header-title">{{header}}</div>
+  </div>
+
+  <div *ngIf="summary" class="content">
+    <mat-tab-group>
+      <mat-tab label="Summary">
+        <app-user-card [summary]="summary" (event)="userCardEvent($event)"></app-user-card>
+      </mat-tab>
+      <mat-tab label="Comments">
+        <ng-template matTabContent>
+          <app-rich-table [columnsSpec]="columnsSpec"
+                          [tableTitle]="''"
+                          [service]="service"
+                          [standalone]="true"
+                          [staticQuery]="staticQuery"></app-rich-table>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+  <div class="footer">
+  </div>
+
+</div>

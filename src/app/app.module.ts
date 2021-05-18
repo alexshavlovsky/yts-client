@@ -20,9 +20,12 @@ import {ChannelCardComponent} from './features/channel-summary/channel-card/chan
 import {VideoCardComponent} from './features/video-summary/video-card/video-card.component';
 import {WorkerLogTableComponent} from './shared/worker-log-table/worker-log-table.component';
 import {CustomDatePipe} from './shared/pipe/custom-date.pipe';
-import { CenterSpinnerComponent } from './shared/center-spinner/center-spinner.component';
-import { UserSummaryComponent } from './features/user-summary/user-summary.component';
-import { UsersComponent } from './features/users/users.component';
+import {CenterSpinnerComponent} from './shared/center-spinner/center-spinner.component';
+import {UserSummaryComponent} from './features/user-summary/user-summary.component';
+import {UsersComponent} from './features/users/users.component';
+import {UserCardComponent} from './features/user-summary/user-card/user-card.component';
+import {ToVideoLinkPipe} from './shared/pipe/to-video-link.pipe';
+import {ToChannelLinkPipe} from './shared/pipe/to-channel-link.pipe';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,10 @@ import { UsersComponent } from './features/users/users.component';
     CustomDatePipe,
     CenterSpinnerComponent,
     UserSummaryComponent,
-    UsersComponent
+    UsersComponent,
+    UserCardComponent,
+    ToVideoLinkPipe,
+    ToChannelLinkPipe
   ],
   imports: [
     BrowserModule,

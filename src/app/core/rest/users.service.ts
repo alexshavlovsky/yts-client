@@ -5,7 +5,7 @@ import {PageableRequest} from '../model/pageable-request';
 import {PagedResponse} from '../model/paged-response.model';
 import {AbstractPagedService} from './abstact-paged.service';
 import {QuerySpec} from '../model/query-spec.model';
-import {UserResponse} from '../model/user-response.model';
+import {UserResponse, UserSummaryResponse} from '../model/user-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +22,10 @@ export class UsersService extends AbstractPagedService<UserResponse> {
       params,
       headers: AbstractPagedService.ACCEPT_JSON
     });
+  }
+
+  getUserSummary(id: string): Observable<UserSummaryResponse> {
+    return this.http.get<UserSummaryResponse>('/api/users/' + id, {headers: AbstractPagedService.ACCEPT_JSON});
   }
 
 }

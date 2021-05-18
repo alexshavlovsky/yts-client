@@ -18,16 +18,20 @@
         <td>{{summary.video.title}}</td>
       </tr>
       <tr>
-        <td>Youtube Id</td>
+        <td>Youtube ID</td>
         <td>{{summary.video.videoId}}</td>
       </tr>
       <tr>
-        <td>Youtube channel Id</td>
+        <td>Youtube link</td>
+        <td><a [href]="summary.video.videoId | toVideoLink">{{summary.video.videoId | toVideoLink}}</a></td>
+      </tr>
+      <tr>
+        <td>Youtube channel ID</td>
         <td>{{summary.video.channelId}}</td>
       </tr>
       <tr>
-        <td>Youtube link</td>
-        <td><a [href]="link">{{link}}</a></td>
+        <td>Youtube channel link</td>
+        <td><a [href]="summary.video.channelId | toChannelLink">{{summary.video.channelId | toChannelLink}}</a></td>
       </tr>
       <tr>
         <td>Published</td>

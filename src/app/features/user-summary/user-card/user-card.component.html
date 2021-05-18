@@ -1,0 +1,66 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{summary.authorText}}</mat-card-title>
+    <mat-card-subtitle>{{summary.authorChannelId}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <table>
+      <tr>
+        <td><h4>Author details</h4></td>
+        <td>
+          <button mat-icon-button color="primary" (click)="event.emit('refresh')">
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>Youtube ID</td>
+        <td>{{summary.authorChannelId}}</td>
+      </tr>
+      <tr>
+        <td>Youtube link</td>
+        <td><a [href]="summary.authorChannelId | toChannelLink">{{summary.authorChannelId | toChannelLink}}</a></td>
+      </tr>
+      <tr>
+        <td>Known names</td>
+        <td>{{summary.knownNames.join(", ")}}</td>
+      </tr>
+      <tr>
+        <td>Comment count</td>
+        <td>{{summary.commentCount}}</td>
+      </tr>
+      <tr>
+        <td>Reply count</td>
+        <td>{{summary.replyCount}}</td>
+      </tr>
+      <tr>
+        <td>Like count</td>
+        <td>{{summary.likeCount}}</td>
+      </tr>
+      <tr>
+        <td>First seen</td>
+        <td>{{summary.firstSeen|defDate}}</td>
+      </tr>
+      <tr>
+        <td>Last seen</td>
+        <td>{{summary.lastSeen|defDate}}</td>
+      </tr>
+      <tr>
+        <td><h4>Commented channel</h4></td>
+        <td>{{summary.commentedChannels.length}}</td>
+      </tr>
+      <tr *ngFor="let c of summary.commentedChannels">
+        <td><a [href]="c.channelId | toChannelLink">{{c.channelId}}</a></td>
+        <td>{{c.title}}</td>
+      </tr>
+      <tr>
+        <td><h4>Comment video</h4></td>
+        <td>{{summary.commentedVideos.length}}</td>
+      </tr>
+      <tr *ngFor="let v of summary.commentedVideos">
+        <td><a [href]="v.videoId | toVideoLink">{{v.videoId}}</a></td>
+        <td>{{v.title}}</td>
+      </tr>
+    </table>
+  </mat-card-content>
+</mat-card>

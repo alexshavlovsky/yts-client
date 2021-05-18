@@ -18,7 +18,7 @@
         <td>{{summary.channel.title}}</td>
       </tr>
       <tr>
-        <td>Youtube Id</td>
+        <td>Youtube ID</td>
         <td>{{summary.channel.channelId}}</td>
       </tr>
       <tr>
@@ -27,7 +27,7 @@
       </tr>
       <tr>
         <td>Youtube link</td>
-        <td><a [href]="link">{{link}}</a></td>
+        <td><a [href]="summary.channel.channelId | toChannelLink">{{summary.channel.channelId | toChannelLink}}</a></td>
       </tr>
       <tr>
         <td>Subscriber count</td>
