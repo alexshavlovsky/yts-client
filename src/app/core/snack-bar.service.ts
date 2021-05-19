@@ -11,7 +11,9 @@ export class SnackBarService {
   }
 
   showHttpError(error: any): Observable<never> {
-    const message = error.error ? (error.error.message ? error.error.message : error.error) : error.message;
+    const message = error.error ?
+      (typeof error.error === 'string' ? error.error : error.error.message ? error.error.message : error.error.error) :
+      error.message;
     this.snackBar.open(message, 'close');
     return EMPTY;
   }

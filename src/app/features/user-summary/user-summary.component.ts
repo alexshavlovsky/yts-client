@@ -7,7 +7,7 @@ import {UsersService} from '../../core/rest/users.service';
 import {catchError, finalize} from 'rxjs/operators';
 import {CommentsService} from '../../core/rest/comments.service';
 import {ColumnSpec} from '../../core/preset/column-spec';
-import {VIDEO_COMMENTS_TABLE_PRESET} from '../../core/preset/rich-table.presets';
+import {USER_COMMENTS_TABLE_PRESET} from '../../core/preset/rich-table.presets';
 import {QuerySpec} from '../../core/model/query-spec.model';
 
 @Component({
@@ -32,7 +32,7 @@ export class UserSummaryComponent implements OnInit {
 
   service = this.commentsService;
   staticQuery: QuerySpec = this.userId ? {authorChannel: this.userId} : {};
-  columnsSpec: ColumnSpec[] = VIDEO_COMMENTS_TABLE_PRESET;
+  columnsSpec: ColumnSpec[] = USER_COMMENTS_TABLE_PRESET;
 
   setHeaders(value: string): void {
     this.header = value;

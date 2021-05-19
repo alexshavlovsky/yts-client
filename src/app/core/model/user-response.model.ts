@@ -12,6 +12,7 @@ export interface UserBase {
 }
 
 export interface UserResponse extends UserBase {
+  commentedChannelCount: number;
   commentedVideoCount: number;
 }
 

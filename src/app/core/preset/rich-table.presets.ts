@@ -62,6 +62,20 @@ export const VIDEO_TABLE_PRESET: ColumnSpec[] = [
   ...CHANNEL_VIDEOS_TABLE_PRESET
 ];
 
+export const USER_COMMENTS_TABLE_PRESET: ColumnSpec[] = [
+  {
+    ...VIDEO_COLUMN_SPEC,
+    title: 'Video',
+    property: 'videoTitle',
+    class: 'a-left flex2 f-small nowrap',
+    sortProperty: 'video',
+  },
+  {title: 'Comment content', property: 'text', class: 'a-left flex8', biLinkBuilder: DEF_COMMENT_BI_LINK_BUILDER},
+  {title: 'Likes', property: 'likeCount', class: 'a-right flex1'},
+  {title: 'Replies', property: 'replyCount', class: 'a-right flex1'},
+  PUBLISHED_COLUMN_SPEC,
+];
+
 export const VIDEO_COMMENTS_TABLE_PRESET: ColumnSpec[] = [
   AUTHOR_COLUMN_SPEC,
   {title: 'Comment content', property: 'text', class: 'a-left flex8', biLinkBuilder: DEF_COMMENT_BI_LINK_BUILDER},
@@ -87,6 +101,7 @@ export const COMMENT_TABLE_PRESET: ColumnSpec[] = [
 
 export const AUTHOR_TABLE_PRESET: ColumnSpec[] = [
   {...AUTHOR_COLUMN_SPEC, class: 'a-left flex4 nowrap'},
+  {title: 'Commented channel count', property: 'commentedChannelCount', class: 'a-right flex1'},
   {title: 'Commented video count', property: 'commentedVideoCount', class: 'a-right flex1'},
   {title: 'Comment count', property: 'commentCount', class: 'a-right flex1'},
   {title: 'Like count', property: 'likeCount', class: 'a-right flex1'},
