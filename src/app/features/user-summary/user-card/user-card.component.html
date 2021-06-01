@@ -46,20 +46,31 @@
         <td>{{summary.lastSeen|defDate}}</td>
       </tr>
       <tr>
-        <td><h4>Commented channel</h4></td>
-        <td>{{summary.commentedChannels.length}}</td>
+        <td colspan="2"><h4>Commented channels ({{summary.commentedChannels.length}})</h4></td>
       </tr>
       <tr *ngFor="let c of summary.commentedChannels">
         <td><a [href]="c.channelId | toChannelLink">{{c.channelId}}</a></td>
         <td>{{c.title}}</td>
       </tr>
+    </table>
+    <table>
       <tr>
-        <td><h4>Comment video</h4></td>
-        <td>{{summary.commentedVideos.length}}</td>
+        <td colspan="2"><h4>Commented videos ({{summary.commentedVideos.length}})</h4></td>
+        <td colspan="10" style="text-align:center">Top 10 video comment thread neighbours</td>
+      </tr>
+      <tr>
+        <td>Title</td>
+        <td>Video ID</td>
+        <td *ngFor="let ccv of summary.commonCommentedVideos" style="writing-mode: vertical-lr;">
+          <a [href]="'users/'+ccv.authorChannelId">{{ccv.authorText}}</a>
+        </td>
       </tr>
       <tr *ngFor="let v of summary.commentedVideos">
-        <td><a [href]="v.videoId | toVideoLink">{{v.videoId}}</a></td>
         <td>{{v.title}}</td>
+        <td><a [href]="v.videoId | toVideoLink">{{v.videoId}}</a></td>
+        <td *ngFor="let ccv of summary.commonCommentedVideos" [class.highlighted]="ccv.videos.includes(v.videoId)">
+          {{ccv.videos.includes(v.videoId) ? '✓' : ''}}
+        </td>
       </tr>
     </table>
   </mat-card-content>

@@ -16,8 +16,16 @@ export interface UserResponse extends UserBase {
   commentedVideoCount: number;
 }
 
+export interface UserCommonCommentedVideos extends UserBase {
+  authorChannelId: string;
+  authorText: string;
+  videoCount: number;
+  videos: string[];
+}
+
 export interface UserSummaryResponse extends UserBase {
   knownNames: string[];
   commentedChannels: ChannelResponse[];
   commentedVideos: VideoResponse[];
+  commonCommentedVideos: UserCommonCommentedVideos[];
 }
