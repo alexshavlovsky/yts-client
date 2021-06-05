@@ -19,7 +19,7 @@
   </div>
 
   <div class="header nowrap" *ngIf="!isSearchOn">
-    <button mat-icon-button style="float: right" color="primary" (click)="isSearchOn=true">
+    <button mat-icon-button style="float: right" color="primary" (click)="showSearchBar()">
       <mat-icon>search</mat-icon>
     </button>
     <div class="header-title">{{tableTitle}}</div>

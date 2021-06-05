@@ -26,6 +26,7 @@ import {UsersComponent} from './features/users/users.component';
 import {UserCardComponent} from './features/user-summary/user-card/user-card.component';
 import {ToVideoLinkPipe} from './shared/pipe/to-video-link.pipe';
 import {ToChannelLinkPipe} from './shared/pipe/to-channel-link.pipe';
+import {ToAuthorDetailsLinkPipe} from './shared/pipe/to-author-details-link.pipe';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import {ToChannelLinkPipe} from './shared/pipe/to-channel-link.pipe';
     UsersComponent,
     UserCardComponent,
     ToVideoLinkPipe,
-    ToChannelLinkPipe
+    ToChannelLinkPipe,
+    ToAuthorDetailsLinkPipe
   ],
   imports: [
     BrowserModule,

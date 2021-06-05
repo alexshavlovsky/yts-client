@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, ElementRef, Input, OnDestroy, ViewChild} from '@angular/core';
+import {AfterContentInit, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, ViewChild} from '@angular/core';
 import {ColumnSpec} from '../../core/preset/column-spec';
 import {MatTableConnectorService} from '../../core/table-connector/mat-table-connector.service';
 import {GenericPagedDataSource} from '../../core/table-connector/generic-paged-data-source';
@@ -27,7 +27,9 @@ export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
               private matTableAdapterService: MatTableConnectorService<T>,
               private channelsService: ChannelsService,
               private videosService: VideosService,
-              private titleService: Title) {
+              private titleService: Title,
+              private changeDetectionRef: ChangeDetectorRef
+  ) {
   }
 
   dataSource: GenericPagedDataSource<T> = new GenericPagedDataSource(null);
@@ -60,6 +62,12 @@ export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
+  }
+
+  showSearchBar(): void {
+    this.isSearchOn = true;
+    this.changeDetectionRef.detectChanges();
+    this.input.nativeElement.focus();
   }
 
   hideSearchBar(): void {

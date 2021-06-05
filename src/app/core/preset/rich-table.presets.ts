@@ -1,27 +1,26 @@
-import {DEF_AUTHOR_CTX_MENU_BUILDER, DEF_CHANNEL_CTX_MENU_BUILDER, DEF_VIDEO_CTX_MENU_BUILDER} from './context-menu.presets';
-import {ColumnSpec} from './column-spec';
 import {
-  DEF_AUTHOR_LINK_BUILDER,
-  DEF_CHANNEL_LINK_BUILDER,
-  DEF_COMMENT_BI_LINK_BUILDER,
-  DEF_VIDEO_LINK_BUILDER
-} from './link-builder.presets';
+  DEF_AUTHOR_CTX_MENU_BUILDER,
+  DEF_CHANNEL_CTX_MENU_BUILDER,
+  DEF_VIDEO_CTX_MENU_BUILDER
+} from './context-menu.presets';
+import {ColumnSpec} from './column-spec';
+import {DEF_COMMENT_BI_LINK_BUILDER} from './link-builder.presets';
 
 const AUTHOR_COLUMN_SPEC: ColumnSpec = {
   title: 'Author', property: 'authorText', class: 'a-left flex2',
-  linkBuilder: DEF_AUTHOR_LINK_BUILDER,
+  linkBuilder: {idKey: 'authorChannelId', builder: id => 'users/' + id},
   ctxMenuBuilder: DEF_AUTHOR_CTX_MENU_BUILDER
 };
 
 const VIDEO_COLUMN_SPEC: ColumnSpec = {
   title: 'Title', property: 'title', class: 'a-left flex4',
-  linkBuilder: DEF_VIDEO_LINK_BUILDER,
+  linkBuilder: {idKey: 'videoId', builder: id => 'videos/' + id},
   ctxMenuBuilder: DEF_VIDEO_CTX_MENU_BUILDER
 };
 
 const CHANNEL_COLUMN_SPEC: ColumnSpec = {
   title: 'Title', property: 'title', class: 'a-left flex4',
-  linkBuilder: DEF_CHANNEL_LINK_BUILDER,
+  linkBuilder: {idKey: 'channelId', builder: id => 'channels/' + id},
   ctxMenuBuilder: DEF_CHANNEL_CTX_MENU_BUILDER
 };
 
