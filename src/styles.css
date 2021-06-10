@@ -1,3 +1,23 @@
+:root {
+  --prim-color: #3f51b5;
+  --link-decoration: 2px dotted var(--prim-color);
+}
+
+.vertical {
+  writing-mode: vertical-lr;
+}
+
+a {
+  text-decoration: none;
+  border-bottom: var(--link-decoration);
+  color: #000;
+}
+
+a.vertical {
+  border-bottom: none;
+  border-left: var(--link-decoration);
+}
+
 html, body {
   height: 100%;
 }

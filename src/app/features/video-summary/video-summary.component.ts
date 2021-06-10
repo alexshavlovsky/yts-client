@@ -23,6 +23,8 @@ export class VideoSummaryComponent implements OnInit {
               private commentsService: CommentsService,
               private snackBarService: SnackBarService,
               private titleService: Title) {
+//    console.log(this.route.snapshot.paramMap);
+//    console.log(this.route.snapshot.queryParams);
   }
 
   readonly videoId = this.route.snapshot.paramMap.get('videoId');

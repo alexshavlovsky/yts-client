@@ -13,9 +13,13 @@ backend service: [Youtube Scraper SpringBoot Web App](https://github.com/alexsha
 ## Technology Stack
 Component            | Technology
 ---                  | ---
-JS framework         | Angular Material 11
+JS framework         | Angular Material 12
 
 ## Screenshots
 <p align="center">
 <img src="https://raw.githubusercontent.com/alexshavlovsky/yts-service/master/screenshots/01_channel_table.png?raw=true">
+</p>
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/alexshavlovsky/yts-service/master/screenshots/06_author_summary.png?raw=true">
 </p>

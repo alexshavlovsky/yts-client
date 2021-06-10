@@ -27,6 +27,8 @@ import {UserCardComponent} from './features/user-summary/user-card/user-card.com
 import {ToVideoLinkPipe} from './shared/pipe/to-video-link.pipe';
 import {ToChannelLinkPipe} from './shared/pipe/to-channel-link.pipe';
 import {ToAuthorDetailsLinkPipe} from './shared/pipe/to-author-details-link.pipe';
+import {ToVideoDetailsLinkPipe} from './shared/pipe/to-video-details-link.pipe';
+import {ToChannelDetailsLinkPipe} from './shared/pipe/to-channel-details-link.pipe';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,8 @@ import {ToAuthorDetailsLinkPipe} from './shared/pipe/to-author-details-link.pipe
     UserCardComponent,
     ToVideoLinkPipe,
     ToChannelLinkPipe,
+    ToChannelDetailsLinkPipe,
+    ToVideoDetailsLinkPipe,
     ToAuthorDetailsLinkPipe
   ],
   imports: [

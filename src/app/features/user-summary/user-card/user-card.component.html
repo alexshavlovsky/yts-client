@@ -1,52 +1,55 @@
-    <table>
-      <tr>
-        <td><h4>Author details</h4></td>
-        <td>
-          <button mat-icon-button color="primary" (click)="event.emit('refresh')">
-            <mat-icon>refresh</mat-icon>
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td>Youtube ID</td>
-        <td>{{summary.authorChannelId}}</td>
-      </tr>
-      <tr>
-        <td>Youtube link</td>
-        <td><a [href]="summary.authorChannelId | toChannelLink">{{summary.authorChannelId | toChannelLink}}</a></td>
-      </tr>
-      <tr>
-        <td>Known names</td>
-        <td>{{summary.knownNames.join(", ")}}</td>
-      </tr>
-      <tr>
-        <td>Comment count</td>
-        <td>{{summary.commentCount}}</td>
-      </tr>
-      <tr>
-        <td>Reply count</td>
-        <td>{{summary.replyCount}}</td>
-      </tr>
-      <tr>
-        <td>Like count</td>
-        <td>{{summary.likeCount}}</td>
-      </tr>
-      <tr>
-        <td>First seen</td>
-        <td>{{summary.firstSeen|defDate}}</td>
-      </tr>
-      <tr>
-        <td>Last seen</td>
-        <td>{{summary.lastSeen|defDate}}</td>
-      </tr>
-      <tr>
-        <td colspan="2"><h4>Commented channels ({{summary.commentedChannels.length}})</h4></td>
-      </tr>
-      <tr *ngFor="let c of summary.commentedChannels">
-        <td><a [href]="c.channelId | toChannelLink">{{c.channelId}}</a></td>
-        <td>{{c.title}}</td>
-      </tr>
-    </table>
+<table>
+  <tr>
+    <td><h4>Author details</h4></td>
+    <td>
+      <button mat-icon-button color="primary" (click)="event.emit('refresh')">
+        <mat-icon>refresh</mat-icon>
+      </button>
+      <a mat-icon-button color="primary" [href]="summary.authorChannelId | toChannelDetailsLink">
+        <mat-icon>ondemand_video</mat-icon>
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td>Youtube ID</td>
+    <td>{{summary.authorChannelId}}</td>
+  </tr>
+  <tr>
+    <td>Youtube link</td>
+    <td><a [href]="summary.authorChannelId | toChannelLink">{{summary.authorChannelId | toChannelLink}}</a></td>
+  </tr>
+  <tr>
+    <td>Known names</td>
+    <td>{{summary.knownNames.join(", ")}}</td>
+  </tr>
+  <tr>
+    <td>Comment count</td>
+    <td>{{summary.commentCount}}</td>
+  </tr>
+  <tr>
+    <td>Reply count</td>
+    <td>{{summary.replyCount}}</td>
+  </tr>
+  <tr>
+    <td>Like count</td>
+    <td>{{summary.likeCount}}</td>
+  </tr>
+  <tr>
+    <td>First seen</td>
+    <td>{{summary.firstSeen|defDate}}</td>
+  </tr>
+  <tr>
+    <td>Last seen</td>
+    <td>{{summary.lastSeen|defDate}}</td>
+  </tr>
+  <tr>
+    <td colspan="2"><h4>Commented channels ({{summary.commentedChannels.length}})</h4></td>
+  </tr>
+  <tr *ngFor="let c of summary.commentedChannels">
+    <td><a [href]="c.channelId | toChannelLink">{{c.channelId}}</a></td>
+    <td>{{c.title}}</td>
+  </tr>
+</table>
 
 <table>
   <tr>
@@ -56,13 +59,13 @@
   <tr>
     <td>Title</td>
     <td>Video ID</td>
-    <td *ngFor="let ccv of summary.commentIntersections" style="writing-mode: vertical-lr;">
-      <a [href]="ccv.authorChannelId | toAuthorDetailsLink">{{ccv.authorText}}</a>
+    <td *ngFor="let ccv of summary.commentIntersections">
+      <a class="vertical" [href]="ccv.authorChannelId | toAuthorDetailsLink">{{ccv.authorText}}</a>
     </td>
   </tr>
   <tr *ngFor="let v of summary.commentedVideos">
-    <td>{{v.title}}</td>
-    <td><a [href]="v.videoId | toVideoLink">{{v.videoId}}</a></td>
+    <td class="nowrap" style="max-width: 240px">{{v.title}}</td>
+    <td><a [href]="v.videoId | toVideoDetailsLink">{{v.videoId}}</a></td>
     <td *ngFor="let ccv of summary.commentIntersections"
         [class.highlightedST]="ccv.sameThreadPosterVideos?.includes(v.videoId)"
         [class.highlightedRP]="ccv.repPosterVideos?.includes(v.videoId)"

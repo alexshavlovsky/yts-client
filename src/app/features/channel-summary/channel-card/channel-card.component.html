@@ -5,6 +5,9 @@
       <button mat-icon-button color="primary" (click)="event.emit('refresh')">
         <mat-icon>refresh</mat-icon>
       </button>
+      <a mat-icon-button color="primary" [href]="summary.channel.channelId | toAuthorDetailsLink">
+        <mat-icon>person</mat-icon>
+      </a>
     </td>
   </tr>
   <tr>
