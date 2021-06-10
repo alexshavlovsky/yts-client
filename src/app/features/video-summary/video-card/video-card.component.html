@@ -1,76 +1,68 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>{{summary.video.title}}</mat-card-title>
-    <mat-card-subtitle>{{summary.video.videoId}}</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-    <table>
-      <tr>
-        <td><h4>Video details</h4></td>
-        <td>
-          <button mat-icon-button color="primary" (click)="event.emit('refresh')">
-            <mat-icon>refresh</mat-icon>
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td>Title</td>
-        <td>{{summary.video.title}}</td>
-      </tr>
-      <tr>
-        <td>Youtube ID</td>
-        <td>{{summary.video.videoId}}</td>
-      </tr>
-      <tr>
-        <td>Youtube link</td>
-        <td><a [href]="summary.video.videoId | toVideoLink">{{summary.video.videoId | toVideoLink}}</a></td>
-      </tr>
-      <tr>
-        <td>Youtube channel ID</td>
-        <td>{{summary.video.channelId}}</td>
-      </tr>
-      <tr>
-        <td>Youtube channel link</td>
-        <td><a [href]="summary.video.channelId | toChannelLink">{{summary.video.channelId | toChannelLink}}</a></td>
-      </tr>
-      <tr>
-        <td>Published</td>
-        <td>{{summary.video.publishedDate|defDate}}</td>
-      </tr>
-      <tr>
-        <td>View count</td>
-        <td>{{summary.video.viewCountText}}</td>
-      </tr>
-      <tr>
-        <td>Comment count</td>
-        <td>{{summary.totalComments}} of {{summary.video.totalCommentCount}}</td>
-      </tr>
-      <tr>
-        <td><h4>Internal timestamps</h4></td>
-      </tr>
-      <tr>
-        <td>Created</td>
-        <td>{{summary.video.createdDate|defDate}}</td>
-      </tr>
-      <tr>
-        <td>Updated</td>
-        <td>{{summary.video.lastUpdatedDate|defDate}}</td>
-      </tr>
-      <tr>
-        <td><h4>Internal status</h4></td>
-      </tr>
-      <tr>
-        <td>Short code</td>
-        <td>{{summary.video.contextStatus.statusCode}}</td>
-      </tr>
-      <tr>
-        <td>Timestamp</td>
-        <td>{{summary.video.contextStatus.statusTimestamp|defDate}}</td>
-      </tr>
-      <tr>
-        <td>Message</td>
-        <td>{{summary.video.contextStatus.statusMessage}}</td>
-      </tr>
-    </table>
-  </mat-card-content>
-</mat-card>
+<table>
+  <tr>
+    <td><h4>Video details</h4></td>
+    <td>
+      <button mat-icon-button color="primary" (click)="event.emit('refresh')">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </td>
+  </tr>
+  <tr>
+    <td>Title</td>
+    <td>{{summary.video.title}}</td>
+  </tr>
+  <tr>
+    <td>Youtube ID</td>
+    <td>{{summary.video.videoId}}</td>
+  </tr>
+  <tr>
+    <td>Youtube link</td>
+    <td><a [href]="summary.video.videoId | toVideoLink">{{summary.video.videoId | toVideoLink}}</a></td>
+  </tr>
+  <tr>
+    <td>Youtube channel ID</td>
+    <td>{{summary.video.channelId}}</td>
+  </tr>
+  <tr>
+    <td>Youtube channel link</td>
+    <td><a [href]="summary.video.channelId | toChannelLink">{{summary.video.channelId | toChannelLink}}</a></td>
+  </tr>
+  <tr>
+    <td>Published</td>
+    <td>{{summary.video.publishedDate|defDate}}</td>
+  </tr>
+  <tr>
+    <td>View count</td>
+    <td>{{summary.video.viewCountText}}</td>
+  </tr>
+  <tr>
+    <td>Comment count</td>
+    <td>{{summary.totalComments}} of {{summary.video.totalCommentCount}}</td>
+  </tr>
+  <tr>
+    <td><h4>Internal timestamps</h4></td>
+  </tr>
+  <tr>
+    <td>Created</td>
+    <td>{{summary.video.createdDate|defDate}}</td>
+  </tr>
+  <tr>
+    <td>Updated</td>
+    <td>{{summary.video.lastUpdatedDate|defDate}}</td>
+  </tr>
+  <tr>
+    <td><h4>Internal status</h4></td>
+  </tr>
+  <tr>
+    <td>Short code</td>
+    <td>{{summary.video.contextStatus.statusCode}}</td>
+  </tr>
+  <tr>
+    <td>Timestamp</td>
+    <td>{{summary.video.contextStatus.statusTimestamp|defDate}}</td>
+  </tr>
+  <tr>
+    <td>Message</td>
+    <td>{{summary.video.contextStatus.statusMessage}}</td>
+  </tr>
+</table>

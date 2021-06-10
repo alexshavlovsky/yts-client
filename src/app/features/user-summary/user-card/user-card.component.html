@@ -1,9 +1,3 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>{{summary.authorText}}</mat-card-title>
-    <mat-card-subtitle>{{summary.authorChannelId}}</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
     <table>
       <tr>
         <td><h4>Author details</h4></td>
@@ -53,25 +47,46 @@
         <td>{{c.title}}</td>
       </tr>
     </table>
-    <table>
-      <tr>
-        <td colspan="2"><h4>Commented videos ({{summary.commentedVideos.length}})</h4></td>
-        <td colspan="10" style="text-align:center">Top 10 video comment thread neighbours</td>
-      </tr>
-      <tr>
-        <td>Title</td>
-        <td>Video ID</td>
-        <td *ngFor="let ccv of summary.commonCommentedVideos" style="writing-mode: vertical-lr;">
-          <a [href]="ccv.authorChannelId | toAuthorDetailsLink">{{ccv.authorText}}</a>
-        </td>
-      </tr>
-      <tr *ngFor="let v of summary.commentedVideos">
-        <td>{{v.title}}</td>
-        <td><a [href]="v.videoId | toVideoLink">{{v.videoId}}</a></td>
-        <td *ngFor="let ccv of summary.commonCommentedVideos" [class.highlighted]="ccv.videos.includes(v.videoId)">
-          {{ccv.videos.includes(v.videoId) ? '✓' : ''}}
-        </td>
-      </tr>
-    </table>
-  </mat-card-content>
-</mat-card>
+
+<table>
+  <tr>
+    <td colspan="2"><h4>Commented videos ({{summary.commentedVideos.length}})</h4></td>
+    <td colspan="10" style="text-align:center">Top comment intersections</td>
+  </tr>
+  <tr>
+    <td>Title</td>
+    <td>Video ID</td>
+    <td *ngFor="let ccv of summary.commentIntersections" style="writing-mode: vertical-lr;">
+      <a [href]="ccv.authorChannelId | toAuthorDetailsLink">{{ccv.authorText}}</a>
+    </td>
+  </tr>
+  <tr *ngFor="let v of summary.commentedVideos">
+    <td>{{v.title}}</td>
+    <td><a [href]="v.videoId | toVideoLink">{{v.videoId}}</a></td>
+    <td *ngFor="let ccv of summary.commentIntersections"
+        [class.highlightedST]="ccv.sameThreadPosterVideos?.includes(v.videoId)"
+        [class.highlightedRP]="ccv.repPosterVideos?.includes(v.videoId)"
+        [class.highlightedRR]="ccv.repRecipientVideos?.includes(v.videoId)">
+      {{(ccv.sameThreadPosterVideos?.includes(v.videoId) ? 'C' : '') +
+    (ccv.repPosterVideos?.includes(v.videoId) ? 'R' : '') +
+    (ccv.repRecipientVideos?.includes(v.videoId) ? 'r' : '')}}
+    </td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <td colspan="2"><h4>Legend</h4></td>
+  </tr>
+  <tr>
+    <td class="highlightedST">C</td>
+    <td>commented on the same video as <b>{{summary.authorText}}</b></td>
+  </tr>
+  <tr>
+    <td class="highlightedRP">R</td>
+    <td>replied to <b>{{summary.authorText}}</b></td>
+  </tr>
+  <tr>
+    <td class="highlightedRR">r</td>
+    <td>got a reply from <b>{{summary.authorText}}</b></td>
+  </tr>
+</table>

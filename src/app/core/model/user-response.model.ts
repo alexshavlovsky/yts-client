@@ -20,12 +20,14 @@ export interface UserCommonCommentedVideos extends UserBase {
   authorChannelId: string;
   authorText: string;
   videoCount: number;
-  videos: string[];
+  repPosterVideos: string[];
+  repRecipientVideos: string[];
+  sameThreadPosterVideos: string[];
 }
 
 export interface UserSummaryResponse extends UserBase {
   knownNames: string[];
   commentedChannels: ChannelResponse[];
   commentedVideos: VideoResponse[];
-  commonCommentedVideos: UserCommonCommentedVideos[];
+  commentIntersections: UserCommonCommentedVideos[];
 }
