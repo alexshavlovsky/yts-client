@@ -23,6 +23,7 @@ export interface UserCommonCommentedVideos extends UserBase {
   repPosterVideos: string[];
   repRecipientVideos: string[];
   sameThreadPosterVideos: string[];
+  sameBranchPosterVideos: string[];
 }
 
 export interface UserSummaryResponse extends UserBase {

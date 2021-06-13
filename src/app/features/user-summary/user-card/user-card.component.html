@@ -60,7 +60,7 @@
     <td>Title</td>
     <td>Video ID</td>
     <td *ngFor="let ccv of summary.commentIntersections">
-      <a class="vertical" [href]="ccv.authorChannelId | toAuthorDetailsLink">{{ccv.authorText}}</a>
+      <a class="vertical nowrap" [href]="ccv.authorChannelId | toAuthorDetailsLink">{{ccv.authorText}}</a>
     </td>
   </tr>
   <tr *ngFor="let v of summary.commentedVideos">
@@ -68,9 +68,11 @@
     <td><a [href]="v.videoId | toVideoDetailsLink">{{v.videoId}}</a></td>
     <td *ngFor="let ccv of summary.commentIntersections"
         [class.highlightedST]="ccv.sameThreadPosterVideos?.includes(v.videoId)"
+        [class.highlightedSB]="ccv.sameBranchPosterVideos?.includes(v.videoId)"
         [class.highlightedRP]="ccv.repPosterVideos?.includes(v.videoId)"
         [class.highlightedRR]="ccv.repRecipientVideos?.includes(v.videoId)">
       {{(ccv.sameThreadPosterVideos?.includes(v.videoId) ? 'C' : '') +
+    (ccv.sameBranchPosterVideos?.includes(v.videoId) ? 'd' : '') +
     (ccv.repPosterVideos?.includes(v.videoId) ? 'R' : '') +
     (ccv.repRecipientVideos?.includes(v.videoId) ? 'r' : '')}}
     </td>
@@ -83,6 +85,10 @@
   <tr>
     <td class="highlightedST">C</td>
     <td>commented on the same video as <b>{{summary.authorText}}</b></td>
+  </tr>
+  <tr>
+    <td class="highlightedSB">d</td>
+    <td>replied to the same comment as <b>{{summary.authorText}}</b></td>
   </tr>
   <tr>
     <td class="highlightedRP">R</td>

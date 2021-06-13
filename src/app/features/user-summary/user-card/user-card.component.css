@@ -12,6 +12,20 @@
   );
 }
 
+.highlightedSB {
+  font-weight: bold;
+  text-align: center;
+  min-width: 10px;
+  color: white;
+  background: repeating-linear-gradient(
+    45deg,
+    #6094bc,
+    #6094bc 10px,
+    #465298 10px,
+    #465298 20px
+  );
+}
+
 .highlightedRP {
   font-weight: bold;
   text-align: center;
