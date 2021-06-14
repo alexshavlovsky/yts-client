@@ -1,4 +1,4 @@
-import {AfterContentInit, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, ViewChild} from '@angular/core';
+import {AfterContentInit, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ColumnSpec} from '../../core/preset/column-spec';
 import {MatTableConnectorService} from '../../core/table-connector/mat-table-connector.service';
 import {GenericPagedDataSource} from '../../core/table-connector/generic-paged-data-source';
@@ -9,18 +9,19 @@ import {AbstractPagedService} from '../../core/rest/abstact-paged.service';
 import {Title} from '@angular/platform-browser';
 import {QuerySpec} from '../../core/model/query-spec.model';
 import {ContextMenuAction} from '../../core/preset/context-menu';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {ChannelsService} from '../../core/rest/channels.service';
 import {catchError} from 'rxjs/operators';
 import {VideosService} from '../../core/rest/videos.service';
 import {SnackBarService} from '../../core/snack-bar.service';
+import {PagedSortedFilteringQuery} from '../../core/table-connector/paged-sorted-filtering-query';
 
 @Component({
   selector: 'app-rich-table',
   templateUrl: './rich-table.component.html',
   styleUrls: ['./rich-table.component.css']
 })
-export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
+export class RichTableComponent<T> implements AfterContentInit, OnInit, OnDestroy {
 
   constructor(private snackBarService: SnackBarService,
               private router: Router,
@@ -34,12 +35,14 @@ export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
 
   dataSource: GenericPagedDataSource<T> = new GenericPagedDataSource(null);
   isSearchOn = false;
+  initialPagination: number[] = [0, 5];
 
   @Input() tableTitle!: string;
   @Input() columnsSpec!: ColumnSpec[];
   @Input() service!: AbstractPagedService<T>;
   @Input() standalone!: boolean;
   @Input() staticQuery!: QuerySpec;
+  @Input() activatedRoute!: ActivatedRoute;
 
   displayedColumns!: string[];
 
@@ -49,6 +52,19 @@ export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
 
   sub = new Subscription();
 
+  ngOnInit(): void {
+    // get sort and paginator settings from query params
+    if (this.activatedRoute) {
+      const qp = this.activatedRoute.snapshot.queryParams;
+      if (qp.pageIndex && qp.pageSize) {
+        this.initialPagination = [qp.pageIndex, qp.pageSize];
+      }
+      if (qp.sortProperty && qp.sortDirection) {
+        this.sort.sort({id: qp.sortProperty, start: qp.sortDirection, disableClear: false});
+      }
+    }
+  }
+
   ngAfterContentInit(): void {
     if (!this.standalone) {
       this.titleService.setTitle(this.tableTitle);
@@ -56,7 +72,9 @@ export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
     this.displayedColumns = this.columnsSpec.map(column => column.property);
     this.dataSource = new GenericPagedDataSource<T>(this.service);
     this.sub.add(this.matTableAdapterService
-      .connect(this.paginator, this.sort, this.input, this.dataSource, this.staticQuery ? this.staticQuery : {}).subscribe());
+      .connect(this.initialPagination, this.activatedRoute, this.router,
+        this.paginator, this.sort, this.input, this.dataSource, this.staticQuery ? this.staticQuery : {})
+      .subscribe(q => this.queryChanged(q)));
     this.sub.add(this.dataSource.error$.subscribe(error => this.snackBarService.showHttpError(error)));
   }
 
@@ -116,6 +134,26 @@ export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
     } else {
       window.open(url, '_blank');
     }
+  }
+
+  queryChanged(query: PagedSortedFilteringQuery): void {
+    if (!this.activatedRoute) {
+      return;
+    }
+    const params: Params = {...query};
+    if (!(params.sortProperty && params.sortDirection)) {
+      delete params.sortProperty;
+      delete params.sortDirection;
+    }
+    if (!params.filter || params.filter === '') {
+      delete params.filter;
+    }
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.activatedRoute,
+        queryParams: params
+      });
   }
 
 }

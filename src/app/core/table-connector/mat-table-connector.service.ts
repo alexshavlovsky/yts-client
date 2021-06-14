@@ -1,12 +1,14 @@
 import {ElementRef, Injectable} from '@angular/core';
-import {fromEvent, merge, Observable, of} from 'rxjs';
-import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
+import {EMPTY, fromEvent, merge, Observable, of} from 'rxjs';
+import {debounceTime, distinctUntilChanged, filter, map, tap} from 'rxjs/operators';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {PagedSortedFilteringQuery} from './paged-sorted-filtering-query';
 import {GenericPagedDataSource} from './generic-paged-data-source';
 import {PageableRequest} from '../model/pageable-request';
 import {QuerySpec} from '../model/query-spec.model';
+import {ActivatedRoute, NavigationStart, Router} from '@angular/router';
+import {flatMap} from 'rxjs/internal/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,17 +18,27 @@ export class MatTableConnectorService<T> {
   constructor() {
   }
 
-  connect(paginator: MatPaginator, sort: MatSort, input: ElementRef,
-          dataSource: GenericPagedDataSource<T>, staticQuery: QuerySpec): Observable<void> {
+  connect(initialPagination: number[], route: ActivatedRoute, router: Router, paginator: MatPaginator, sort: MatSort, input: ElementRef,
+          dataSource: GenericPagedDataSource<T>, staticQuery: QuerySpec): Observable<PagedSortedFilteringQuery> {
     return merge(
-      of(true), // this value triggers initial data request
-      paginator.page.pipe(map(_ => false)),
-      sort.sortChange.pipe(map(_ => true)),
-      fromEvent(input.nativeElement, 'input').pipe(map(_ => true)),
-      fromEvent(input.nativeElement, 'keyup').pipe(map(_ => true)),
+      of(initialPagination),
+      paginator.page.pipe(map(_ => [paginator.pageIndex, paginator.pageSize])),
+      sort.sortChange.pipe(map(_ => [0, paginator.pageSize])),
+      fromEvent(input.nativeElement, 'input').pipe(map(_ => [0, paginator.pageSize])),
+      fromEvent(input.nativeElement, 'keyup').pipe(map(_ => [0, paginator.pageSize])),
+      router.events.pipe(
+        filter(event => event instanceof NavigationStart && event.navigationTrigger === 'popstate'),
+        flatMap(_ => {
+          if (route) {
+            // so far this is the simples way to make browser's back button function properly
+            window.location.reload();
+          }
+          return EMPTY;
+        })
+      )
     ).pipe(
       debounceTime(500),
-      map(resetPaginator => this.buildQuery(resetPaginator, paginator, sort, input)),
+      map(pagination => this.buildQuery(pagination, sort, input)),
       distinctUntilChanged((a, b) =>
         a.pageIndex === b.pageIndex &&
         a.pageSize === b.pageSize &&
@@ -34,20 +46,20 @@ export class MatTableConnectorService<T> {
         a.sortDirection === b.sortDirection &&
         a.filter === b.filter
       ),
-      map(query => this.loadData(query, staticQuery, dataSource))
+      tap(query => this.loadData(query, staticQuery, dataSource))
     );
   }
 
-  buildQuery(resetPaginator: boolean, paginator: MatPaginator, sort: MatSort, input: ElementRef): PagedSortedFilteringQuery {
-    const filter: string = input.nativeElement.value;
+  buildQuery(pagination: number[], sort: MatSort, input: ElementRef): PagedSortedFilteringQuery {
+    const query: string = input.nativeElement.value;
     const sortDirection: string = sort.direction;
     const doSort: boolean = sortDirection !== '';
     return {
-      pageIndex: resetPaginator ? 0 : paginator.pageIndex,
-      pageSize: paginator.pageSize,
+      pageIndex: pagination[0],
+      pageSize: pagination[1],
       sortProperty: doSort ? sort.active : undefined,
       sortDirection: doSort ? sortDirection : undefined,
-      filter
+      filter: query
     };
   }
 

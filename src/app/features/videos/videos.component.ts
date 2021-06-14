@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {ColumnSpec} from '../../core/preset/column-spec';
 import {VideosService} from '../../core/rest/videos.service';
 import {VIDEO_TABLE_PRESET} from '../../core/preset/rich-table.presets';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-videos',
@@ -10,8 +11,10 @@ import {VIDEO_TABLE_PRESET} from '../../core/preset/rich-table.presets';
 })
 export class VideosComponent {
 
-  constructor(private videosService: VideosService) {
+  constructor(private videosService: VideosService, private route: ActivatedRoute) {
   }
+
+  activatedRoute = this.route;
 
   tableTitle = 'Videos';
 
