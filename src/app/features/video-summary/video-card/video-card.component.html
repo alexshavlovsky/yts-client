@@ -36,8 +36,16 @@
     <td>{{summary.video.viewCountText}}</td>
   </tr>
   <tr>
-    <td>Comment count</td>
-    <td>{{summary.totalComments}} of {{summary.video.totalCommentCount}}</td>
+    <td>Total comment count</td>
+    <td>{{summary.stat.totalCommentCount}} of {{summary.video.totalCommentCount}}</td>
+  </tr>
+  <tr>
+    <td>Reply count</td>
+    <td>{{summary.stat.replyCount}}</td>
+  </tr>
+  <tr>
+    <td>Unique comment author count</td>
+    <td>{{summary.stat.uniqueAuthorsCount}}</td>
   </tr>
   <tr>
     <td><h4>Internal timestamps</h4></td>

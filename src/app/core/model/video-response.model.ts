@@ -18,8 +18,14 @@ export interface VideoDetailedResponse extends VideoResponse {
   contextStatus: ContextStatusResponse;
 }
 
+export interface VideoStatResponse {
+  totalCommentCount: number;
+  replyCount: number;
+  uniqueAuthorsCount: number;
+}
+
 export interface VideoSummaryResponse {
   video: VideoDetailedResponse;
   log: WorkerLogResponse[];
-  totalComments: number;
+  stat: VideoStatResponse;
 }
