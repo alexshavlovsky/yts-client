@@ -51,7 +51,9 @@ export class PagedSortedQuery {
       delete params.sortProperty;
       delete params.sortDirection;
     }
-    delete params.text;
+    if (params.text === '') {
+      delete params.text;
+    }
     if (JSON.stringify(route.snapshot.queryParams) !== JSON.stringify(params)) {
       router.navigate(
         [],

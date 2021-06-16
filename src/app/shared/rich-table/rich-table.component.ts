@@ -90,13 +90,20 @@ export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  showSearchBar(): void {
+  showSearchBar(text: string): void {
     this.isSearchOn = true;
+    if (this.input.nativeElement.value !== text) {
+      this.input.nativeElement.value = text;
+      this.input.nativeElement.dispatchEvent(new Event('input'));
+    }
     this.changeDetectionRef.detectChanges();
     this.input.nativeElement.focus();
   }
 
   hideSearchBar(): void {
+    if (!this.isSearchOn) {
+      return;
+    }
     this.isSearchOn = false;
     this.input.nativeElement.value = '';
     this.input.nativeElement.dispatchEvent(new Event('input'));
@@ -154,6 +161,11 @@ export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
       } else {
         this.sort.sort({id: '', start: 'asc', disableClear: false});
       }
+    }
+    if (qp.text && qp.text !== '') {
+      this.showSearchBar(qp.text);
+    } else {
+      this.hideSearchBar();
     }
     return qp.pageIndex && qp.pageSize ? [Number(qp.pageIndex), Number(qp.pageSize)] : this.defaultPagination;
   }
