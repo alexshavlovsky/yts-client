@@ -1,10 +1,10 @@
 import {CollectionViewer, DataSource} from '@angular/cdk/collections';
 import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 import {PagedResponse} from '../model/paged-response.model';
-import {PageableRequest} from '../model/pageable-request';
 import {catchError, finalize} from 'rxjs/operators';
 import {AbstractPagedService} from '../rest/abstact-paged.service';
 import {QuerySpec} from '../model/query-spec.model';
+import {PagedSortedQuery} from './paged-sorted-filtering-query';
 
 export class GenericPagedDataSource<T> implements DataSource<T> {
 
@@ -38,12 +38,12 @@ export class GenericPagedDataSource<T> implements DataSource<T> {
     this.loadingSubject.complete();
   }
 
-  load(pageableRequest: PageableRequest, query: QuerySpec): void {
+  load(pageableRequest: PagedSortedQuery, staticQuery: QuerySpec): void {
     if (this.pagedService == null) {
       return;
     }
     this.loadingSubject.next(true);
-    this.pagedService.find(pageableRequest, query).pipe(
+    this.pagedService.find(pageableRequest, staticQuery).pipe(
       catchError(error => {
         this.errorSubject.next(error);
         return of(GenericPagedDataSource.EMPTY_PAGE);

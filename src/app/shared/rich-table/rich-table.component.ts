@@ -1,27 +1,28 @@
-import {AfterContentInit, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterContentInit, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, ViewChild} from '@angular/core';
 import {ColumnSpec} from '../../core/preset/column-spec';
 import {MatTableConnectorService} from '../../core/table-connector/mat-table-connector.service';
 import {GenericPagedDataSource} from '../../core/table-connector/generic-paged-data-source';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {Subscription} from 'rxjs';
+import {EMPTY, merge, Observable, of, Subscription} from 'rxjs';
 import {AbstractPagedService} from '../../core/rest/abstact-paged.service';
 import {Title} from '@angular/platform-browser';
 import {QuerySpec} from '../../core/model/query-spec.model';
 import {ContextMenuAction} from '../../core/preset/context-menu';
-import {ActivatedRoute, Params, Router} from '@angular/router';
+import {ActivatedRoute, NavigationStart, Params, Router} from '@angular/router';
 import {ChannelsService} from '../../core/rest/channels.service';
-import {catchError} from 'rxjs/operators';
+import {catchError, tap} from 'rxjs/operators';
 import {VideosService} from '../../core/rest/videos.service';
 import {SnackBarService} from '../../core/snack-bar.service';
-import {PagedSortedFilteringQuery} from '../../core/table-connector/paged-sorted-filtering-query';
+import {flatMap} from 'rxjs/internal/operators';
+import {PagedSortedQuery} from '../../core/table-connector/paged-sorted-filtering-query';
 
 @Component({
   selector: 'app-rich-table',
   templateUrl: './rich-table.component.html',
   styleUrls: ['./rich-table.component.css']
 })
-export class RichTableComponent<T> implements AfterContentInit, OnInit, OnDestroy {
+export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
 
   constructor(private snackBarService: SnackBarService,
               private router: Router,
@@ -35,7 +36,8 @@ export class RichTableComponent<T> implements AfterContentInit, OnInit, OnDestro
 
   dataSource: GenericPagedDataSource<T> = new GenericPagedDataSource(null);
   isSearchOn = false;
-  initialPagination: number[] = [0, 5];
+  defaultPageSize = 5;
+  defaultPagination = [0, this.defaultPageSize];
 
   @Input() tableTitle!: string;
   @Input() columnsSpec!: ColumnSpec[];
@@ -52,30 +54,36 @@ export class RichTableComponent<T> implements AfterContentInit, OnInit, OnDestro
 
   sub = new Subscription();
 
-  ngOnInit(): void {
-    // get sort and paginator settings from query params
-    if (this.activatedRoute) {
-      const qp = this.activatedRoute.snapshot.queryParams;
-      if (qp.pageIndex && qp.pageSize) {
-        this.initialPagination = [qp.pageIndex, qp.pageSize];
-      }
-      if (qp.sortProperty && qp.sortDirection) {
-        this.sort.sort({id: qp.sortProperty, start: qp.sortDirection, disableClear: false});
-      }
-    }
-  }
-
   ngAfterContentInit(): void {
     if (!this.standalone) {
       this.titleService.setTitle(this.tableTitle);
     }
     this.displayedColumns = this.columnsSpec.map(column => column.property);
     this.dataSource = new GenericPagedDataSource<T>(this.service);
-    this.sub.add(this.matTableAdapterService
-      .connect(this.initialPagination, this.activatedRoute, this.router,
-        this.paginator, this.sort, this.input, this.dataSource, this.staticQuery ? this.staticQuery : {})
-      .subscribe(q => this.queryChanged(q)));
-    this.sub.add(this.dataSource.error$.subscribe(error => this.snackBarService.showHttpError(error)));
+
+    // parse the initial and popstate query params, update the matSort and trigger the datasource update
+    // only if the activatedRoute input property is present
+    const paginationEvents: Observable<number[]> = this.activatedRoute ?
+      merge(
+        of(this.parseQueryParamsAndUpdateSort(this.activatedRoute.snapshot.queryParams)),
+        this.router.events.pipe(
+          flatMap(e => e instanceof NavigationStart && e.navigationTrigger === 'popstate' ?
+            of(this.parseQueryParamsAndUpdateSort(this.router.parseUrl(e.url).queryParams)) : EMPTY
+          )
+        ))
+      :
+      of(this.defaultPagination);
+
+    this.sub.add(
+      this.matTableAdapterService
+        .connect(paginationEvents, this.paginator, this.sort, this.input).pipe(
+        tap(query => this.dataSource.load(query, this.staticQuery ? this.staticQuery : {})),
+        tap(query => query.updateRouter(this.activatedRoute, this.router, this.defaultPagination))
+      ).subscribe()
+    );
+    this.sub.add(
+      this.dataSource.error$.subscribe(error => this.snackBarService.showHttpError(error))
+    );
   }
 
   ngOnDestroy(): void {
@@ -136,24 +144,18 @@ export class RichTableComponent<T> implements AfterContentInit, OnInit, OnDestro
     }
   }
 
-  queryChanged(query: PagedSortedFilteringQuery): void {
-    if (!this.activatedRoute) {
-      return;
+  parseQueryParamsAndUpdateSort(qp: Params): number[] {
+    // TODO parse and update search panel state
+    const current = PagedSortedQuery.getSortFromMatSort(this.sort);
+    const next = PagedSortedQuery.getSortFromParams(qp);
+    if (current.active !== next.active || current.direction !== next.direction) {
+      if (next.active !== '' && next.direction !== '') {
+        this.sort.sort({id: next.active, start: next.direction, disableClear: false});
+      } else {
+        this.sort.sort({id: '', start: 'asc', disableClear: false});
+      }
     }
-    const params: Params = {...query};
-    if (!(params.sortProperty && params.sortDirection)) {
-      delete params.sortProperty;
-      delete params.sortDirection;
-    }
-    if (!params.filter || params.filter === '') {
-      delete params.filter;
-    }
-    this.router.navigate(
-      [],
-      {
-        relativeTo: this.activatedRoute,
-        queryParams: params
-      });
+    return qp.pageIndex && qp.pageSize ? [Number(qp.pageIndex), Number(qp.pageSize)] : this.defaultPagination;
   }
 
 }
