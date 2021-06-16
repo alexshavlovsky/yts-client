@@ -67,7 +67,7 @@ export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
       merge(
         of(this.parseQueryParamsAndUpdateSort(this.activatedRoute.snapshot.queryParams)),
         this.router.events.pipe(
-          flatMap(e => e instanceof NavigationStart && e.navigationTrigger === 'popstate' ?
+          flatMap(e => e instanceof NavigationStart && (e.navigationTrigger === 'popstate' || e.navigationTrigger === 'imperative') ?
             of(this.parseQueryParamsAndUpdateSort(this.router.parseUrl(e.url).queryParams)) : EMPTY
           )
         ))
@@ -145,14 +145,13 @@ export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
 
   private navigate(url: string): void {
     if (url.startsWith('/')) {
-      this.router.navigate([url]);
+      this.router.navigateByUrl(url);
     } else {
       window.open(url, '_blank');
     }
   }
 
   parseQueryParamsAndUpdateSort(qp: Params): number[] {
-    // TODO parse and update search panel state
     const current = PagedSortedQuery.getSortFromMatSort(this.sort);
     const next = PagedSortedQuery.getSortFromParams(qp);
     if (current.active !== next.active || current.direction !== next.direction) {
