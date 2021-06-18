@@ -9,13 +9,13 @@ import {AbstractPagedService} from '../../core/rest/abstact-paged.service';
 import {Title} from '@angular/platform-browser';
 import {QuerySpec} from '../../core/model/query-spec.model';
 import {ContextMenuAction} from '../../core/preset/context-menu';
-import {ActivatedRoute, NavigationStart, Params, Router} from '@angular/router';
+import {ActivatedRoute, NavigationStart, Router} from '@angular/router';
 import {ChannelsService} from '../../core/rest/channels.service';
 import {catchError, tap} from 'rxjs/operators';
 import {VideosService} from '../../core/rest/videos.service';
 import {SnackBarService} from '../../core/snack-bar.service';
 import {flatMap} from 'rxjs/internal/operators';
-import {PagedSortedQuery} from '../../core/table-connector/paged-sorted-filtering-query';
+import {RichTableRouterQueryParams, SortSpec} from '../../core/table-connector/paged-sorted-filtering-query';
 
 @Component({
   selector: 'app-rich-table',
@@ -49,7 +49,7 @@ export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
   displayedColumns!: string[];
 
   @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort!: MatSort;
+  @ViewChild(MatSort, {static: true}) matSort!: MatSort;
   @ViewChild('input', {static: true}) input!: ElementRef;
 
   sub = new Subscription();
@@ -65,10 +65,10 @@ export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
     // only if the activatedRoute input property is present
     const paginationEvents: Observable<number[]> = this.activatedRoute ?
       merge(
-        of(this.parseQueryParamsAndUpdateSort(this.activatedRoute.snapshot.queryParams)),
+        of(this.parseQueryParamsAndUpdateViewState(this.activatedRoute.snapshot.queryParams)),
         this.router.events.pipe(
           flatMap(e => e instanceof NavigationStart && (e.navigationTrigger === 'popstate' || e.navigationTrigger === 'imperative') ?
-            of(this.parseQueryParamsAndUpdateSort(this.router.parseUrl(e.url).queryParams)) : EMPTY
+            of(this.parseQueryParamsAndUpdateViewState(this.router.parseUrl(e.url).queryParams)) : EMPTY
           )
         ))
       :
@@ -76,7 +76,7 @@ export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
 
     this.sub.add(
       this.matTableAdapterService
-        .connect(paginationEvents, this.paginator, this.sort, this.input).pipe(
+        .connect(paginationEvents, this.paginator, this.matSort, this.input).pipe(
         tap(query => this.dataSource.load(query, this.staticQuery ? this.staticQuery : {})),
         tap(query => query.updateRouter(this.activatedRoute, this.router, this.defaultPagination))
       ).subscribe()
@@ -88,6 +88,20 @@ export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
+  }
+
+// ===================================
+// QUERY PARAMS TO VIEW STATE BINDINGS
+// ===================================
+
+  parseQueryParamsAndUpdateViewState(qp: RichTableRouterQueryParams): number[] {
+    SortSpec.fromParams(qp).applyToMatSort(this.matSort);
+    if (qp.text && qp.text !== '') {
+      this.showSearchBar(qp.text);
+    } else {
+      this.hideSearchBar();
+    }
+    return qp.pageIndex && qp.pageSize ? [Number(qp.pageIndex), Number(qp.pageSize)] : this.defaultPagination;
   }
 
   showSearchBar(text: string): void {
@@ -108,6 +122,10 @@ export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
     this.input.nativeElement.value = '';
     this.input.nativeElement.dispatchEvent(new Event('input'));
   }
+
+// ====================
+// CONTEXT MENU ACTIONS
+// ====================
 
   ctxMenuAction(action: ContextMenuAction): void {
     switch (action.type) {
@@ -149,24 +167,6 @@ export class RichTableComponent<T> implements AfterContentInit, OnDestroy {
     } else {
       window.open(url, '_blank');
     }
-  }
-
-  parseQueryParamsAndUpdateSort(qp: Params): number[] {
-    const current = PagedSortedQuery.getSortFromMatSort(this.sort);
-    const next = PagedSortedQuery.getSortFromParams(qp);
-    if (current.active !== next.active || current.direction !== next.direction) {
-      if (next.active !== '' && next.direction !== '') {
-        this.sort.sort({id: next.active, start: next.direction, disableClear: false});
-      } else {
-        this.sort.sort({id: '', start: 'asc', disableClear: false});
-      }
-    }
-    if (qp.text && qp.text !== '') {
-      this.showSearchBar(qp.text);
-    } else {
-      this.hideSearchBar();
-    }
-    return qp.pageIndex && qp.pageSize ? [Number(qp.pageIndex), Number(qp.pageSize)] : this.defaultPagination;
   }
 
 }

@@ -19,7 +19,7 @@ export class VideosService extends AbstractPagedService<VideoResponse> {
   }
 
   find(pageableRequest: PagedSortedQuery, staticQuery: QuerySpec): Observable<PagedResponse<VideoResponse>> {
-    const params = pageableRequest.getHttpParams(staticQuery);
+    const params = pageableRequest.toHttpParams(staticQuery);
     return this.http.get<PagedResponse<VideoResponse>>('/api/videos', {
       params,
       headers: AbstractPagedService.ACCEPT_JSON

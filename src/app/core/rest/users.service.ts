@@ -17,7 +17,7 @@ export class UsersService extends AbstractPagedService<UserResponse> {
   }
 
   find(pageableRequest: PagedSortedQuery, staticQuery: QuerySpec): Observable<PagedResponse<UserResponse>> {
-    const params = pageableRequest.getHttpParams(staticQuery);
+    const params = pageableRequest.toHttpParams(staticQuery);
     return this.http.get<PagedResponse<UserResponse>>('/api/users', {
       params,
       headers: AbstractPagedService.ACCEPT_JSON

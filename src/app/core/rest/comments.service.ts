@@ -19,7 +19,7 @@ export class CommentsService extends AbstractPagedService<CommentResponse> {
 //  GET /api/comments?text=book&page=0&size=5&sort=authorText,asc
 //  Accept: application/json
   find(pageableRequest: PagedSortedQuery, staticQuery: QuerySpec): Observable<PagedResponse<CommentResponse>> {
-    const params = pageableRequest.getHttpParams(staticQuery);
+    const params = pageableRequest.toHttpParams(staticQuery);
     return this.http.get<PagedResponse<CommentResponse>>('/api/comments', {
       params,
       headers: AbstractPagedService.ACCEPT_JSON

@@ -19,7 +19,7 @@ export class ChannelsService extends AbstractPagedService<ChannelResponse> {
   }
 
   find(pageableRequest: PagedSortedQuery, staticQuery: QuerySpec): Observable<PagedResponse<ChannelResponse>> {
-    const params = pageableRequest.getHttpParams(staticQuery);
+    const params = pageableRequest.toHttpParams(staticQuery);
     return this.http.get<PagedResponse<ChannelResponse>>('/api/channels', {
       params,
       headers: AbstractPagedService.ACCEPT_JSON
