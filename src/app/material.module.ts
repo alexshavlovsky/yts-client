@@ -13,6 +13,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
+import {MatSelectModule} from '@angular/material/select';
+import {FlexLayoutModule} from "@angular/flex-layout";
 
 
 @NgModule({
@@ -32,6 +34,8 @@ import {MatCardModule} from '@angular/material/card';
     MatDividerModule,
     MatTabsModule,
     MatCardModule,
+    MatSelectModule,
+    FlexLayoutModule
   ],
   exports: [
     MatInputModule,
@@ -49,6 +53,8 @@ import {MatCardModule} from '@angular/material/card';
     MatDividerModule,
     MatTabsModule,
     MatCardModule,
+    MatSelectModule,
+    FlexLayoutModule
   ],
 })
 export class MaterialModule {

@@ -1,17 +1,63 @@
-<h2 mat-dialog-title>{{data.title}}</h2>
+<h2 mat-dialog-title>Schedule a channel</h2>
 
 <mat-dialog-content [formGroup]="form">
 
-  <mat-form-field>
-    <input matInput
-           [placeholder]="data.channelIdPlaceholder"
-           (keydown.enter)="confirm()"
-           formControlName="channelIdInput">
-  </mat-form-field>
+  <div fxLayout='row'>
+    <mat-form-field fxFlex="100">
+      <mat-label>Youtube Channel Id</mat-label>
+      <input matInput formControlName="channelIdInput" (keydown.enter)="confirm()">
+    </mat-form-field>
+  </div>
+
+  <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutAlign="space-between">
+
+    <mat-form-field [fxFlex]="flexDef" [fxFlex.lt-md]="flexLtMd" [fxFlex.lt-sm]="flexLtSm">
+      <mat-label>Comment Order</mat-label>
+      <mat-select formControlName="commentOrder">
+        <mat-option value="newest">Newest First</mat-option>
+        <mat-option value="top">Top First</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field [fxFlex]="flexDef" [fxFlex.lt-md]="flexLtMd" [fxFlex.lt-sm]="flexLtSm">
+      <mat-label>Number Of Threads</mat-label>
+      <input matInput type="number" formControlName="numberOfThreads">
+    </mat-form-field>
+
+    <mat-form-field [fxFlex]="flexDef" [fxFlex.lt-md]="flexLtMd" [fxFlex.lt-sm]="flexLtSm">
+      <mat-label>Executor Timeout</mat-label>
+      <input matInput type="number" formControlName="executorTimeoutValue">
+    </mat-form-field>
+
+    <mat-form-field [fxFlex]="flexDef" [fxFlex.lt-md]="flexLtMd" [fxFlex.lt-sm]="flexLtSm">
+      <mat-label>Executor Timeout Unit</mat-label>
+      <mat-select formControlName="executorTimeoutUnit">
+        <mat-option value="minute">Minute</mat-option>
+        <mat-option value="hour">Hour</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field [fxFlex]="flexDef" [fxFlex.lt-md]="flexLtMd" [fxFlex.lt-sm]="flexLtSm">
+      <mat-label>Video Per Channel Limit</mat-label>
+      <input matInput type="text" formControlName="videoLimit">
+    </mat-form-field>
+
+    <mat-form-field [fxFlex]="flexDef" [fxFlex.lt-md]="flexLtMd" [fxFlex.lt-sm]="flexLtSm">
+      <mat-label>Comment Per Video Limit</mat-label>
+      <input matInput type="text" formControlName="commentLimit">
+    </mat-form-field>
+
+    <mat-form-field [fxFlex]="flexDef" [fxFlex.lt-md]="flexLtMd" [fxFlex.lt-sm]="flexLtSm">
+      <mat-label>Reply Per Comment Limit</mat-label>
+      <input matInput type="text" formControlName="replyLimit">
+    </mat-form-field>
+
+  </div>
 
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-button color="primary" (click)="close()">{{data.cancelButton}}</button>
-  <button mat-button color="primary" (click)="confirm()">{{data.confirmButton}}</button>
+  <button mat-button color="primary" (click)="default()">Reset</button>
+  <button mat-button color="primary" (click)="close()">Close</button>
+  <button mat-button color="primary" (click)="confirm()">Confirm</button>
 </mat-dialog-actions>
